@@ -5,6 +5,8 @@ import { neynar as neynarHub } from "frog/hubs";
 import { neynar } from "frog/middlewares";
 import { handle } from "frog/vercel";
 
+// const ADD_ACTION_URL = "https://warpcast.com/~/add-cast-action?url=https://betrality.vercel.app/api/bet";
+
 export const app = new Frog({
   title: "BetViral",
   assetsPath: "/",
@@ -18,10 +20,33 @@ export const app = new Frog({
 );
 
 // This is the frame the user sees when they click on the cast action
-app.frame('/view', (c) => {
+app.frame('/view', async (c) => {
   const castAuthor = c.var.cast?.author.username;
   const castHash = c.var.cast?.hash;
 
+  async function fetchLikes(url: string) {
+    const options = {
+      method: 'GET',
+      headers: { accept: 'application/json', api_key: 'NEYNAR_API_DOCS' }
+    };
+    try {
+      const response = await fetch(url, options);
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Fetch error:', error);
+    }
+  }
+  const url = `https://api.neynar.com/v2/farcaster/cast?identifier=${castHash}&type=hash`;
+
+  const ggg = await fetchLikes(url);
+  const gggg = ggg.cast.reactions.likes_count;
   // Fetch Neynar API to get the cast likes
 
   return c.res({
@@ -52,7 +77,7 @@ app.frame('/view', (c) => {
             whiteSpace: 'pre-wrap',
           }}
         >
-          {`Bet on @${castAuthor}'s cast going over/under ${castHash} likes?`}
+          {`Bet on @${castAuthor}'s cast going over/under ${gggg * 10} likes?`}
         </div>
       </div>
     ),
@@ -98,8 +123,8 @@ app.frame("/add", (c) => {
 });
 
 app.castAction("/bet", async (c) => {
-    return c.frame({ path: '/view' })
-  },
+  return c.frame({ path: '/view' })
+},
   { name: "Bet on Virality", icon: "flame" }
 );
 
