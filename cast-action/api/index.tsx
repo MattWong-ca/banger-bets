@@ -24,30 +24,23 @@ app.frame('/view', async (c) => {
   const castAuthor = c.var.cast?.author.username;
   const castHash = c.var.cast?.hash;
 
+  // 27 - 43: Fetch the cast likes from Neynar API
   async function fetchLikes(url: string) {
-    const options = {
-      method: 'GET',
-      headers: { accept: 'application/json', api_key: 'NEYNAR_API_DOCS' }
-    };
+    const options = { method: 'GET', headers: { accept: 'application/json', api_key: 'NEYNAR_API_DOCS' }};
     try {
       const response = await fetch(url, options);
-  
       if (!response.ok) {
         throw new Error(`Error: ${response.status} ${response.statusText}`);
       }
-  
       const data = await response.json();
-      console.log(data);
       return data;
     } catch (error) {
       console.error('Fetch error:', error);
     }
   }
   const url = `https://api.neynar.com/v2/farcaster/cast?identifier=${castHash}&type=hash`;
-
-  const ggg = await fetchLikes(url);
-  const gggg = ggg.cast.reactions.likes_count;
-  // Fetch Neynar API to get the cast likes
+  const res = await fetchLikes(url);
+  const castLikes = res.cast.reactions.likes_count;
 
   return c.res({
     image: (
@@ -77,7 +70,7 @@ app.frame('/view', async (c) => {
             whiteSpace: 'pre-wrap',
           }}
         >
-          {`Bet on @${castAuthor}'s cast going over/under ${gggg * 10} likes?`}
+          {`Bet on @${castAuthor}'s cast going over/under ${castLikes * 10} likes?`}
         </div>
       </div>
     ),
