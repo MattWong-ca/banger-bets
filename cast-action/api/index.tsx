@@ -20,6 +20,10 @@ export const app = new Frog({
 // This is the frame the user sees when they click on the cast action
 app.frame('/view', (c) => {
   const castAuthor = c.var.cast?.author.username;
+  const castHash = c.var.cast?.hash;
+
+  // Fetch Neynar API to get the cast likes
+  
   return c.res({
     image: (
       <div
@@ -54,7 +58,8 @@ app.frame('/view', (c) => {
     ),
     intents: [
       // This should link them to web UI
-      <Button.Link href={`https://github.com/MattWong-ca`}>Go to Mint</Button.Link>,
+      <Button.Link href={`https://viralbet.vercel.app/?${castHash}?over`}>Over</Button.Link>,
+      <Button.Link href={`https://viralbet.vercel.app/?${castHash}?under`}>Under</Button.Link>
     ],
   })
 })
@@ -95,7 +100,7 @@ app.frame("/add", (c) => {
 app.castAction("/bet", async (c) => {
     return c.frame({ path: '/view' })
   },
-  { name: "Bet on Virality", icon: "link-external" }
+  { name: "Bet on Virality", icon: "flame" }
 );
 
 // @ts-ignore
