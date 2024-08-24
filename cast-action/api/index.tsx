@@ -5,16 +5,14 @@ import { neynar as neynarHub } from "frog/hubs";
 import { neynar } from "frog/middlewares";
 import { handle } from "frog/vercel";
 
-const NEYNAR_API_KEY = "NEYNAR_FROG_FM";
-
 export const app = new Frog({
   title: "BetViral",
   assetsPath: "/",
   basePath: "/api",
-  hub: neynarHub({ apiKey: NEYNAR_API_KEY })
+  hub: neynarHub({ apiKey: "NEYNAR_FROG_FM" })
 }).use(
   neynar({
-    apiKey: NEYNAR_API_KEY,
+    apiKey: "NEYNAR_FROG_FM",
     features: ["interactor", "cast"],
   })
 );
@@ -62,7 +60,7 @@ app.frame('/view', (c) => {
 })
 
 // For adding the cast action
-app.frame("/v2", (c) => {
+app.frame("/add", (c) => {
   return c.res({
     image: (
       <div
@@ -89,12 +87,12 @@ app.frame("/v2", (c) => {
       </div>
     ),
     intents: [
-      <Button.AddCastAction action="/add">Add</Button.AddCastAction>,
+      <Button.AddCastAction action="/bet">Add</Button.AddCastAction>,
     ],
   });
 });
 
-app.castAction("/add", async (c) => {
+app.castAction("/bet", async (c) => {
     return c.frame({ path: '/view' })
   },
   { name: "Bet on Virality", icon: "link-external" }
