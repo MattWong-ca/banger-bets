@@ -56,7 +56,7 @@ app.frame('/view', (c) => {
     ),
     intents: [
       // This should link them to web UI
-      <Button.Link href={``}>Go to Mint</Button.Link>,
+      <Button.Link href={`https://github.com/MattWong-ca`}>Go to Mint</Button.Link>,
     ],
   })
 })
