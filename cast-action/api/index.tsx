@@ -70,14 +70,14 @@ app.frame('/view', async (c) => {
             whiteSpace: 'pre-wrap',
           }}
         >
-          {`Bet on @${castAuthor}'s cast going over/under ${castLikes * 10} likes?`}
+          {`Bet on @${castAuthor}'s cast going over or under ${castLikes * 10} likes?`}
         </div>
       </div>
     ),
     intents: [
       // This should link them to web UI
-      <Button.Link href={`https://viralbet.vercel.app/?${castHash}?over`}>Over</Button.Link>,
-      <Button.Link href={`https://viralbet.vercel.app/?${castHash}?under`}>Under</Button.Link>
+      <Button.Link href={`https://viralbet.vercel.app/?${castHash}?over?${castLikes * 10}`}>Over</Button.Link>,
+      <Button.Link href={`https://viralbet.vercel.app/?${castHash}?under?${castLikes * 10}`}>Under</Button.Link>
     ],
   })
 })
