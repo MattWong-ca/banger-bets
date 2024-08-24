@@ -23,7 +23,7 @@ app.frame('/view', (c) => {
   const castHash = c.var.cast?.hash;
 
   // Fetch Neynar API to get the cast likes
-  
+
   return c.res({
     image: (
       <div
@@ -52,7 +52,7 @@ app.frame('/view', (c) => {
             whiteSpace: 'pre-wrap',
           }}
         >
-          {`Bet on @${castAuthor}'s cast going over/under ___ likes?`}
+          {`Bet on @${castAuthor}'s cast going over/under ${castHash} likes?`}
         </div>
       </div>
     ),
