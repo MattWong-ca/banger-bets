@@ -76,8 +76,8 @@ app.frame('/view', async (c) => {
     ),
     intents: [
       // This should link them to web UI
-      <Button.Link href={`https://viralbet.vercel.app/?${castHash}?over?${castLikes * 10}`}>Over</Button.Link>,
-      <Button.Link href={`https://viralbet.vercel.app/?${castHash}?under?${castLikes * 10}`}>Under</Button.Link>
+      <Button.Link href={`https://bet-viral.vercel.app/?${castHash}?over?${castLikes * 10}`}>Over</Button.Link>,
+      <Button.Link href={`https://bet-viral.vercel.app/?${castHash}?under?${castLikes * 10}`}>Under</Button.Link>
     ],
   })
 })
