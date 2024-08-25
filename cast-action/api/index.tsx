@@ -41,7 +41,7 @@ app.frame('/view', async (c) => {
   const url = `https://api.neynar.com/v2/farcaster/cast?identifier=${castHash}&type=hash`;
   const res = await fetchLikes(url);
   const castLikes = res.cast.reactions.likes_count;
-
+  // TO DO: make algo take into account replies, recasts, # of followers?
   return c.res({
     image: (
       <div
