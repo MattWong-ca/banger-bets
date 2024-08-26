@@ -12,8 +12,8 @@ export default function Home() {
       </nav>
       
       <div className="flex-grow flex items-center justify-center px-4">
-        <div className="relative bg-white rounded-lg w-[80vw] max-w-[1920px] h-[50vh] flex items-center justify-center">
-          <h1 className="absolute -top-10 left-1/2 transform -translate-x-1/2 text-white text-4xl font-bold italic">
+        <div className="relative bg-white rounded-lg w-[80vw] max-w-[1920px] h-[60vh] flex items-center justify-center">
+          <h1 className="absolute -top-32 left-1/2 transform -translate-x-1/2 text-white text-7xl font-bold italic">
             Bet Viral
           </h1>
           {/* Add content for the white rectangle here */}
