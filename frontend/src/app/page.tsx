@@ -1,19 +1,63 @@
+"use client";
+
 import Image from "next/image";
 import { CHAIN_NAMESPACES, IProvider, WEB3AUTH_NETWORK } from "@web3auth/base";
+import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
+import { Web3Auth } from "@web3auth/modal";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const clientId = "BPi5PB_UiIZ-cPz1GtV5i1I2iOSOHuimiXBI0e-Oe_u6X3oVAbCiAZOTEBtTXw4tsluTITPqA8zMsfxIKMjiqNQ"; // get from https://dashboard.web3auth.io
-
+  const clientId = "";
   const chainConfig = {
     chainNamespace: CHAIN_NAMESPACES.EIP155,
-    chainId: "0x1", // Please use 0x1 for Ethereum Mainnet
-    rpcTarget: "https://rpc.ankr.com/eth",
-    // Avoid using public rpcTarget in production.
-    // Use services like Infura, Quicknode etc
-    displayName: "Ethereum Mainnet",
-    blockExplorerUrl: "https://etherscan.io/",
-    ticker: "ETH",
-    tickerName: "Ethereum",
+    chainId: "0x1e",
+    rpcTarget: "https://rootstock.drpc.org",
+    displayName: "Rootstock Mainnet",
+    blockExplorerUrl: "https://explorer.rootstock.io/",
+    ticker: "RBTC",
+    tickerName: "RBTC",
+    logo: "https://pbs.twimg.com/profile_images/1592915327343624195/HPPSuVx3_400x400.jpg",
+  };
+  const privateKeyProvider = new EthereumPrivateKeyProvider({
+    config: { chainConfig: chainConfig },
+  });
+  const web3auth = new Web3Auth({
+    clientId,
+    web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_MAINNET,
+    privateKeyProvider,
+  });
+
+  const [provider, setProvider] = useState<IProvider | null>(null);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const init = async () => {
+      try {
+        await web3auth.initModal();
+        setProvider(web3auth.provider);
+
+        if (web3auth.connected) {
+          setLoggedIn(true);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    init();
+  }, []);
+
+  const login = async () => {
+    const web3authProvider = await web3auth.connect();
+    setProvider(web3authProvider);
+    console.log("web3authProvider");
+    if (web3auth.connected) {
+      setLoggedIn(true);
+    }
+  };
+
+  const getUserInfo = async () => {
+    const user = await web3auth.getUserInfo();
   };
 
   return (
@@ -23,7 +67,7 @@ export default function Home() {
           <a href="#" className="hover:underline text-lg font-bold">My Bets</a>
           <a href="#" className="hover:underline text-lg font-bold">Leaderboard</a>
         </div>
-        <button className="bg-white text-black px-4 py-2 rounded text-lg font-bold">Connect Wallet</button>
+        <button onClick={login} className="bg-white text-black px-4 py-2 rounded text-lg font-bold">Connect Wallet</button>
       </nav>
       
       <div className="flex-grow flex items-center justify-center px-4">
