@@ -1,6 +1,21 @@
 import Image from "next/image";
+import { CHAIN_NAMESPACES, IProvider, WEB3AUTH_NETWORK } from "@web3auth/base";
 
 export default function Home() {
+  const clientId = "BPi5PB_UiIZ-cPz1GtV5i1I2iOSOHuimiXBI0e-Oe_u6X3oVAbCiAZOTEBtTXw4tsluTITPqA8zMsfxIKMjiqNQ"; // get from https://dashboard.web3auth.io
+
+  const chainConfig = {
+    chainNamespace: CHAIN_NAMESPACES.EIP155,
+    chainId: "0x1", // Please use 0x1 for Ethereum Mainnet
+    rpcTarget: "https://rpc.ankr.com/eth",
+    // Avoid using public rpcTarget in production.
+    // Use services like Infura, Quicknode etc
+    displayName: "Ethereum Mainnet",
+    blockExplorerUrl: "https://etherscan.io/",
+    ticker: "ETH",
+    tickerName: "Ethereum",
+  };
+
   return (
     <main className="bg-black min-h-screen flex flex-col">
       <nav className="flex justify-between items-center p-4 text-white">
