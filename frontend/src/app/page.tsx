@@ -27,17 +27,23 @@ export default function Home() {
     privateKeyProvider,
   });
 
+  const [web3authh, setWeb3auth] = useState<Web3Auth | null>(null);
   const [provider, setProvider] = useState<IProvider | null>(null);
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     const init = async () => {
       try {
-        await web3auth.initModal();
-        setProvider(web3auth.provider);
-
-        if (web3auth.connected) {
+        const web3authInstance = new Web3Auth({
+          clientId,
+          web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_MAINNET,
+          privateKeyProvider,
+        });
+        await web3authInstance.initModal();
+        setWeb3auth(web3authInstance);
+        if (web3authInstance.connected) {
           setLoggedIn(true);
+          setProvider(web3authInstance.provider);
         }
       } catch (error) {
         console.error(error);
@@ -48,16 +54,26 @@ export default function Home() {
   }, []);
 
   const login = async () => {
-    const web3authProvider = await web3auth.connect();
-    setProvider(web3authProvider);
-    console.log("web3authProvider");
-    if (web3auth.connected) {
+    if (!web3authh) {
+      console.log("Web3Auth not initialized yet");
+      return;
+    }
+    try {
+      const web3authProvider = await web3auth.connect();
+      setProvider(web3authProvider);
       setLoggedIn(true);
+    } catch (error) {
+      console.error(error);
     }
   };
 
   const getUserInfo = async () => {
+    if (!web3authh) {
+      console.log("Web3Auth not initialized yet");
+      return;
+    }
     const user = await web3auth.getUserInfo();
+    console.log(user);
   };
 
   return (
