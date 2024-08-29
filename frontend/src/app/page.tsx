@@ -1,86 +1,85 @@
 "use client";
 
-import Image from "next/image";
-import { CHAIN_NAMESPACES, IProvider, WEB3AUTH_NETWORK } from "@web3auth/base";
-import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
-import { Web3Auth } from "@web3auth/modal";
-import { useEffect, useState } from "react";
-import { useWeb3Auth, Web3AuthProvider } from "@web3auth/modal-react-hooks";
-import Web3AuthClient from "./client";
+// import { CHAIN_NAMESPACES, IProvider, WEB3AUTH_NETWORK } from "@web3auth/base";
+// import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
+// import { Web3Auth } from "@web3auth/modal";
+// import { useEffect, useState } from "react";
+// import { useWeb3Auth, Web3AuthProvider } from "@web3auth/modal-react-hooks";
+// import Web3AuthClient from "./client";
 
 export default function Home() {
-  const { isConnected, connect } = useWeb3Auth();
-  const clientId = "BKafN9Mq-bb7sVCq8-ZcfME29emBV94GAMhMtJUvTYhNLF4dQLWBuFvC41CqtpOHmuSP2QnC23Y6oYIeHZzIiSw";
-  const chainConfig = {
-    chainNamespace: CHAIN_NAMESPACES.EIP155,
-    chainId: "0x1e",
-    rpcTarget: "https://rootstock.drpc.org",
-    displayName: "Rootstock Mainnet",
-    blockExplorerUrl: "https://explorer.rootstock.io/",
-    ticker: "RBTC",
-    tickerName: "RBTC",
-    logo: "https://pbs.twimg.com/profile_images/1592915327343624195/HPPSuVx3_400x400.jpg",
-  };
-  const privateKeyProvider = new EthereumPrivateKeyProvider({
-    config: { chainConfig: chainConfig },
-  });
-  const web3auth = new Web3Auth({
-    clientId,
-    web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_MAINNET,
-    privateKeyProvider,
-  });
+  // const { isConnected, connect } = useWeb3Auth();
+  // const clientId = "BKafN9Mq-bb7sVCq8-ZcfME29emBV94GAMhMtJUvTYhNLF4dQLWBuFvC41CqtpOHmuSP2QnC23Y6oYIeHZzIiSw";
+  // const chainConfig = {
+  //   chainNamespace: CHAIN_NAMESPACES.EIP155,
+  //   chainId: "0x1e",
+  //   rpcTarget: "https://rootstock.drpc.org",
+  //   displayName: "Rootstock Mainnet",
+  //   blockExplorerUrl: "https://explorer.rootstock.io/",
+  //   ticker: "RBTC",
+  //   tickerName: "RBTC",
+  //   logo: "https://pbs.twimg.com/profile_images/1592915327343624195/HPPSuVx3_400x400.jpg",
+  // };
+  // const privateKeyProvider = new EthereumPrivateKeyProvider({
+  //   config: { chainConfig: chainConfig },
+  // });
+  // const web3auth = new Web3Auth({
+  //   clientId,
+  //   web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_MAINNET,
+  //   privateKeyProvider,
+  // });
 
-  const [web3authh, setWeb3auth] = useState<Web3Auth | null>(null);
-  const [provider, setProvider] = useState<IProvider | null>(null);
-  const [loggedIn, setLoggedIn] = useState(false);
+  // const [web3authh, setWeb3auth] = useState<Web3Auth | null>(null);
+  // const [provider, setProvider] = useState<IProvider | null>(null);
+  // const [loggedIn, setLoggedIn] = useState(false);
 
-  useEffect(() => {
-    const init = async () => {
-      try {
-        const web3authInstance = new Web3Auth({
-          clientId,
-          web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_MAINNET,
-          privateKeyProvider,
-        });
-        await web3authInstance.initModal();
-        setWeb3auth(web3authInstance);
-        if (web3authInstance.connected) {
-          setLoggedIn(true);
-          setProvider(web3authInstance.provider);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  // useEffect(() => {
+  //   const init = async () => {
+  //     try {
+  //       const web3authInstance = new Web3Auth({
+  //         clientId,
+  //         web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_MAINNET,
+  //         privateKeyProvider,
+  //       });
+  //       await web3authInstance.initModal();
+  //       setWeb3auth(web3authInstance);
+  //       if (web3authInstance.connected) {
+  //         setLoggedIn(true);
+  //         setProvider(web3authInstance.provider);
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
 
-    init();
-  }, []);
+  //   init();
+  // }, []);
 
-  const login = async () => {
-    if (!web3authh) {
-      console.log("Web3Auth not initialized yet");
-      return;
-    }
-    try {
-      const web3authProvider = await web3auth.connect();
-      setProvider(web3authProvider);
-      setLoggedIn(true);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const login = async () => {
+  //   if (!web3authh) {
+  //     console.log("Web3Auth not initialized yet");
+  //     return;
+  //   }
+  //   try {
+  //     const web3authProvider = await web3auth.connect();
+  //     setProvider(web3authProvider);
+  //     setLoggedIn(true);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  const getUserInfo = async () => {
-    if (!web3authh) {
-      console.log("Web3Auth not initialized yet");
-      return;
-    }
-    const user = await web3auth.getUserInfo();
-    console.log(user);
-  };
+  // const getUserInfo = async () => {
+  //   if (!web3authh) {
+  //     console.log("Web3Auth not initialized yet");
+  //     return;
+  //   }
+  //   const user = await web3auth.getUserInfo();
+  //   console.log(user);
+  // };
 
   return (
-    <Web3AuthClient>
+    // <Web3AuthClient>
 
     <main className="bg-black min-h-screen flex flex-col">
       <nav className="flex justify-between items-center p-4 text-white">
@@ -88,9 +87,12 @@ export default function Home() {
           <a href="#" className="hover:underline text-lg font-bold">My Bets</a>
           <a href="#" className="hover:underline text-lg font-bold">Leaderboard</a>
         </div>
-        {isConnected ? (<div>0x123</div>) : (<button onClick={connect} className="bg-white text-black px-4 py-2 rounded text-lg font-bold">
+        {/* {isConnected ? (<div>0x123</div>) : (<button onClick={connect} className="bg-white text-black px-4 py-2 rounded text-lg font-bold">
           Connect Wallet
-        </button>)}
+        </button>)} */}
+        <button className="bg-white text-black px-4 py-2 rounded text-lg font-bold">
+          Connect Wallet
+        </button>
       </nav>
       <div className="flex-grow flex items-center justify-center px-4">
         <div className="relative bg-white rounded-lg w-[80vw] max-w-[1920px] h-[60vh] flex items-center justify-center">
@@ -121,7 +123,6 @@ export default function Home() {
         </div>
       </div>
     </main>
-    </Web3AuthClient>
-
+    // {/* </Web3AuthClient> */}
   );
 }
