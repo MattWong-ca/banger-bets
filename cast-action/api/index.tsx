@@ -107,6 +107,7 @@ app.frame("/add/:numberOfLikes", (c) => {
             whiteSpace: "pre-wrap",
           }}
         >
+          {/* NOTE: variables don't work unless they're inside {``} */}
           {`Add Cast Action with ${numberOfLikes} likes`}
         </div>
       </div>
