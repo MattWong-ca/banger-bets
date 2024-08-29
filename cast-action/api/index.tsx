@@ -84,7 +84,7 @@ app.frame('/view', async (c) => {
 
 // For adding the cast action
 app.frame("/add/:numberOfLikes", (c) => {
-  const numberOfLikes = c.req.param('numberOfLikes');
+  // const numberOfLikes = c.req.param('numberOfLikes');
 
   return c.res({
     image: (
@@ -107,7 +107,7 @@ app.frame("/add/:numberOfLikes", (c) => {
             whiteSpace: "pre-wrap",
           }}
         >
-          Add Cast Action with {numberOfLikes} likes
+          Add Cast Action with 10 likes
         </div>
       </div>
     ),
