@@ -20,11 +20,9 @@ export const app = new Frog({
 );
 
 // This is the frame the user sees when they click on the cast action
-app.frame('/view/:numberOfLikes', async (c) => {
+app.frame('/view', async (c) => {
   const castAuthor = c.var.cast?.author.username;
   const castHash = c.var.cast?.hash;
-  const numberOfLikes = c.req.param('numberOfLikes');
-
 
   // 27 - 43: Fetch the cast likes from Neynar API
   async function fetchLikes(url: string) {
@@ -72,7 +70,7 @@ app.frame('/view/:numberOfLikes', async (c) => {
             whiteSpace: 'pre-wrap',
           }}
         >
-          {`Bet on @${castAuthor}'s cast going over or under ${numberOfLikes} likes?`}
+          {`Bet on @${castAuthor}'s cast going over or under ${castLikes * 10} likes?`}
         </div>
       </div>
     ),
@@ -85,7 +83,9 @@ app.frame('/view/:numberOfLikes', async (c) => {
 })
 
 // For adding the cast action
-app.frame("/add", (c) => {
+app.frame("/add/:numberOfLikes", (c) => {
+  const numberOfLikes = c.req.param('numberOfLikes');
+
   return c.res({
     image: (
       <div
@@ -107,7 +107,7 @@ app.frame("/add", (c) => {
             whiteSpace: "pre-wrap",
           }}
         >
-          Add Cast Action
+          Add Cast Action with {numberOfLikes} likes
         </div>
       </div>
     ),
