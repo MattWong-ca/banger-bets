@@ -11,6 +11,22 @@ declare var window: any
 export default function Home() {
   const [userAddress, setUserAddress] = useState('');
 
+  const getCHZBalance = async () => {
+    try {
+      const chilizProvider = new ethers.JsonRpcProvider('https://rpc.ankr.com/chiliz');
+      const chzTokenAddress = "0x..."; // REPLACE WITH ACTUAL CHZ CONTRACT ADDRESS I DEPLOY
+      const chzTokenABI = [""]; // REPLACE WITH ACTUAL CHZ CONTRACT ABI I DEPLOY
+      const chzTokenContract = new ethers.Contract(chzTokenAddress, chzTokenABI, chilizProvider);  
+      const balance = await chzTokenContract.balanceOf(userAddress);
+      console.log("CHZ Balance: ", ethers.formatUnits(balance, 18));
+    } catch (error) {
+      console.error("Error fetching CHZ balance: ", error);
+    }
+  }
+  useEffect(() => {
+    getCHZBalance();
+  }, []);
+
   const connectWallet = async () => {
     // Check if MetaMask is installed
     if (typeof window.ethereum !== 'undefined') {
@@ -149,6 +165,7 @@ export default function Home() {
               <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-lg font-bold">
                 🔥 BET
               </button>
+              <button onClick={getCHZBalance}>Refresh Balance</button>
             </div>
           </div>
         </div>
