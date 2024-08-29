@@ -1,13 +1,41 @@
 "use client";
+import { ethers } from 'ethers';
 
 // import { CHAIN_NAMESPACES, IProvider, WEB3AUTH_NETWORK } from "@web3auth/base";
 // import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 // import { Web3Auth } from "@web3auth/modal";
-// import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 // import { useWeb3Auth, Web3AuthProvider } from "@web3auth/modal-react-hooks";
 // import Web3AuthClient from "./client";
-
+declare var window: any
 export default function Home() {
+  const [userAddress, setUserAddress] = useState('');
+
+  const connectWallet = async () => {
+    // Check if MetaMask is installed
+    if (typeof window.ethereum !== 'undefined') {
+      try {
+        // Request account access
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+
+        // Set the user's address
+        setUserAddress(accounts[0]);
+
+        // Create an ethers provider
+        const provider = new ethers.BrowserProvider(window.ethereum);
+
+        // Get the signer
+        const signer = provider.getSigner();
+
+        // You can now use `signer` to interact with the blockchain
+        console.log("Connected account:", accounts[0]);
+      } catch (error) {
+        console.error("Error connecting to wallet:", error);
+      }
+    } else {
+      alert("MetaMask is not installed!");
+    }
+  };
   // const { isConnected, connect } = useWeb3Auth();
   // const clientId = "BKafN9Mq-bb7sVCq8-ZcfME29emBV94GAMhMtJUvTYhNLF4dQLWBuFvC41CqtpOHmuSP2QnC23Y6oYIeHZzIiSw";
   // const chainConfig = {
@@ -87,12 +115,15 @@ export default function Home() {
           <a href="#" className="hover:underline text-lg font-bold">My Bets</a>
           <a href="#" className="hover:underline text-lg font-bold">Leaderboard</a>
         </div>
-        {/* {isConnected ? (<div>0x123</div>) : (<button onClick={connect} className="bg-white text-black px-4 py-2 rounded text-lg font-bold">
-          Connect Wallet
-        </button>)} */}
-        <button className="bg-white text-black px-4 py-2 rounded text-lg font-bold">
-          Connect Wallet
-        </button>
+        {userAddress ? (
+          <div className="text-white text-lg font-bold">
+            {`${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`}
+          </div>
+        ) : (
+          <button onClick={connectWallet} className="bg-white text-black px-4 py-2 rounded text-lg font-bold">
+            Connect Wallet
+          </button>
+        )}
       </nav>
       <div className="flex-grow flex items-center justify-center px-4">
         <div className="relative bg-white rounded-lg w-[80vw] max-w-[1920px] h-[60vh] flex items-center justify-center">
