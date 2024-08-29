@@ -5,9 +5,12 @@ import { CHAIN_NAMESPACES, IProvider, WEB3AUTH_NETWORK } from "@web3auth/base";
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 import { Web3Auth } from "@web3auth/modal";
 import { useEffect, useState } from "react";
+import { useWeb3Auth, Web3AuthProvider } from "@web3auth/modal-react-hooks";
+import Web3AuthClient from "./client";
 
 export default function Home() {
-  const clientId = "";
+  const { isConnected, connect } = useWeb3Auth();
+  const clientId = "BKafN9Mq-bb7sVCq8-ZcfME29emBV94GAMhMtJUvTYhNLF4dQLWBuFvC41CqtpOHmuSP2QnC23Y6oYIeHZzIiSw";
   const chainConfig = {
     chainNamespace: CHAIN_NAMESPACES.EIP155,
     chainId: "0x1e",
@@ -77,15 +80,18 @@ export default function Home() {
   };
 
   return (
+    <Web3AuthClient>
+
     <main className="bg-black min-h-screen flex flex-col">
       <nav className="flex justify-between items-center p-4 text-white">
         <div className="space-x-4">
           <a href="#" className="hover:underline text-lg font-bold">My Bets</a>
           <a href="#" className="hover:underline text-lg font-bold">Leaderboard</a>
         </div>
-        <button onClick={login} className="bg-white text-black px-4 py-2 rounded text-lg font-bold">Connect Wallet</button>
+        {isConnected ? (<div>0x123</div>) : (<button onClick={connect} className="bg-white text-black px-4 py-2 rounded text-lg font-bold">
+          Connect Wallet
+        </button>)}
       </nav>
-      
       <div className="flex-grow flex items-center justify-center px-4">
         <div className="relative bg-white rounded-lg w-[80vw] max-w-[1920px] h-[60vh] flex items-center justify-center">
           <h1 className="absolute -top-32 left-1/2 transform -translate-x-1/2 text-white text-7xl font-bold italic">
@@ -115,5 +121,7 @@ export default function Home() {
         </div>
       </div>
     </main>
+    </Web3AuthClient>
+
   );
 }
