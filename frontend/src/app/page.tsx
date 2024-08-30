@@ -7,6 +7,7 @@ declare var window: any
 export default function Home() {
   const [userAddress, setUserAddress] = useState('');
   const [fanTokensAmount, setFanTokensAmount] = useState(0);
+  const [betAmount, setBetAmount] = useState('');
 
   const getCHZBalance = async () => {
     try {
@@ -22,16 +23,25 @@ export default function Home() {
   }
 
   useEffect(() => {
+    // connectWallet();
     getCHZBalance();
   }, [userAddress]);
+
+  const placeBet = async () => {
+    // User signs the transaction to give ___ ETH to contract for betting
+    // Use Neynar --> bot makes a cast with the custom frame
+    // Bet data is published to MongoDB
+
+    // setTimeout of 2 mins, then use Neynar to delete the cast
+
+    // do another setTimeout of 24 hrs, then use Neynar to check # of likes, and publish to MongoDB
+  }
 
   const connectWallet = async () => {
     if (typeof window.ethereum !== 'undefined') {
       try {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         setUserAddress(accounts[0]);
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        const signer = provider.getSigner();
         console.log("Connected account:", accounts[0]);
       } catch (error) {
         console.error("Error connecting to wallet:", error);
@@ -39,6 +49,10 @@ export default function Home() {
     } else {
       alert("MetaMask is not installed!");
     }
+  };
+
+  const handleBetAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBetAmount(e.target.value);
   };
 
   return (
@@ -73,9 +87,20 @@ export default function Home() {
               <p className="text-black text-xl mb-4">
                 Likes in 24 hrs: more than 1280
               </p>
-              <p className="text-black text-xl mb-2">
-                Bet amount (ETH): 0.001
-              </p>
+              <div className="flex items-center mb-4">
+                <p className="text-black text-xl mr-2">
+                  Bet amount (ETH):
+                </p>
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  value={betAmount}
+                  onChange={handleBetAmountChange}
+                  className="border border-black rounded px-2 py-1 w-24"
+                  placeholder="0.00"
+                />
+              </div>
               {fanTokensAmount > 0 ? (
                 <span className="bg-green-500 text-white text-sm px-2 py-1 rounded mb-4">
                   {fanTokensAmount} Fan Tokens in wallet
