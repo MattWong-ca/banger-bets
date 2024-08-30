@@ -7,25 +7,29 @@ import { ethers } from 'ethers';
 import { useEffect, useState } from "react";
 // import { useWeb3Auth, Web3AuthProvider } from "@web3auth/modal-react-hooks";
 // import Web3AuthClient from "./client";
+import fanToken from "../utils/fanToken.json";
+
 declare var window: any
 export default function Home() {
   const [userAddress, setUserAddress] = useState('');
+  const [fanTokensAmount, setFanTokensAmount] = useState(0);
 
   const getCHZBalance = async () => {
     try {
-      const chilizProvider = new ethers.JsonRpcProvider('https://rpc.ankr.com/chiliz');
-      const chzTokenAddress = "0x..."; // REPLACE WITH ACTUAL CHZ CONTRACT ADDRESS I DEPLOY
-      const chzTokenABI = [""]; // REPLACE WITH ACTUAL CHZ CONTRACT ABI I DEPLOY
-      const chzTokenContract = new ethers.Contract(chzTokenAddress, chzTokenABI, chilizProvider);  
+      const chilizProvider = new ethers.JsonRpcProvider('https://spicy-rpc.chiliz.com/');
+      const chzTokenAddress = "0xb861d6d79123ADa308E5F4030F458b402E2D131A";
+      const chzTokenContract = new ethers.Contract(chzTokenAddress, fanToken.abi, chilizProvider);
       const balance = await chzTokenContract.balanceOf(userAddress);
-      console.log("CHZ Balance: ", ethers.formatUnits(balance, 18));
+      setFanTokensAmount(Number(ethers.formatUnits(balance, 2)));
+      console.log("CHZ Balance: ", ethers.formatUnits(balance, 2));
     } catch (error) {
       console.error("Error fetching CHZ balance: ", error);
     }
   }
+  // Might be better to comment it out, giving errors in console
   useEffect(() => {
     getCHZBalance();
-  }, []);
+  }, [userAddress]);
 
   const connectWallet = async () => {
     // Check if MetaMask is installed
@@ -159,12 +163,26 @@ export default function Home() {
               <p className="text-black text-xl mb-2">
                 Bet amount (ETH): 0.001
               </p>
-              <span className="bg-red-500 text-white text-sm px-2 py-1 rounded mb-4">
-                No Fan Tokens in wallet
-              </span>
-              <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-lg font-bold">
-                🔥 BET
-              </button>
+              {fanTokensAmount > 0 ? (
+                <span className="bg-green-500 text-white text-sm px-2 py-1 rounded mb-4">
+                  {fanTokensAmount} Fan Tokens in wallet
+                </span>
+              ) : (
+                <span className="bg-red-500 text-white text-sm px-2 py-1 rounded mb-4">
+                  No Fan Tokens in wallet
+                </span>
+              )}
+              {
+                fanTokensAmount > 0 ? (
+                  <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-lg font-bold">
+                    🔥 BET
+                  </button>
+                ) : (
+                  <button disabled className="bg-gray-200 text-gray-400 px-4 py-2 rounded text-lg font-bold cursor-not-allowed">
+                    BET
+                  </button>
+                )
+              }
               <button onClick={getCHZBalance}>Refresh Balance</button>
             </div>
           </div>
