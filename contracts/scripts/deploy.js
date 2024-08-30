@@ -1,8 +1,7 @@
 async function main() {
-    const FanToken = await ethers.getContractFactory("FanToken");
-    const fanToken = await FanToken.deploy();
-    await fanToken.deployed();
-    console.log("FanToken deployed to:", fanToken.address);
+    const fanToken = await ethers.deployContract('FanToken');
+    await fanToken.waitForDeployment();
+    console.log("FanToken deployed to:", fanToken.target);
 }
 
 main()
