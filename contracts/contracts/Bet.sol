@@ -37,6 +37,7 @@ contract Bet {
     }
 
     // Winner withdraws their winnings
+    // Instead of finding bet using _player1, can use db to find cast hash + bet amount
     function withdraw(address _player1) external {
         BetInfo storage betInfo = bets[_player1];
 
