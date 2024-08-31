@@ -47,14 +47,14 @@ contract Bet {
             "Only players involved in the bet can withdraw"
         );
 
-        // uint256 totalAmount = betInfo.amount * 2;
-        // require(
-        //     address(this).balance >= totalAmount,
-        //     "Not enough funds in contract"
-        // );
+        uint256 totalAmount = betInfo.amount * 2;
+        require(
+            address(this).balance >= totalAmount,
+            "Not enough funds in contract"
+        );
 
         delete bets[_player1]; // Reset the bet info after payout
-        payable(msg.sender).transfer(address(this).balance);
+        payable(msg.sender).transfer(totalAmount);
     }
 
     // Get contract balance
