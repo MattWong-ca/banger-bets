@@ -8,6 +8,7 @@ export default function Home() {
   const [userAddress, setUserAddress] = useState('');
   const [fanTokensAmount, setFanTokensAmount] = useState(0);
   const [betAmount, setBetAmount] = useState('');
+  // const [data, setData] = useState(null);
 
   const getCHZBalance = async () => {
     try {
@@ -28,12 +29,12 @@ export default function Home() {
   }, [userAddress]);
 
   const placeBet = async () => {
-    // User signs the transaction to give ___ ETH to contract for betting
+    // TO DO: User signs the transaction to give ___ ETH to contract for betting
 
 
     // Use Neynar --> bot makes a cast with the custom frame
     // let betPost = `@${bettorUsername} is betting ${ethAmount} ETH that ${castAuthorUsername}'s cast will get more than ${castLikes} likes in 24 hrs.\nBet against them:`;
-    // await neynarClient.publishCast(
+    // const betCast = await neynarClient.publishCast(
     //   process.env.SIGNER_UUID!,
     //   betPost,
     //   {
@@ -44,11 +45,39 @@ export default function Home() {
     // );
 
 
-    // Bet data is published to MongoDB
+    // TO DO: Bet data is published to MongoDB
+
 
     // setTimeout of 2 mins, then use Neynar to delete the cast
+    // setTimeout(async () => {
+    //   try {
+    //     await neynarClient.deleteCast(betPost.hash);
+    //   } catch (error) {
+    //     console.error('Error with deleteCast:', error);
+    //   }
+    // }, 2 * 60 * 1000);
+
 
     // do another setTimeout of 24 hrs, then use Neynar to check # of likes, and publish to MongoDB
+    // const options = {
+    //   method: 'GET',
+    //   headers: {
+    //     accept: 'application/json',
+    //     api_key: 'NEYNAR_API_DOCS'
+    //   }
+    // };
+    // const url = 'https://example.com/api/endpoint';
+    // setTimeout(() => {
+    //   fetch(url, options)
+    //     .then(res => res.json())
+    //     .then(json => {
+    //       setData(json);
+    //     })
+    //     .catch(err => console.error('error:' + err));
+
+    // TO DO: the MongoDB data is updated with response from Neynar API
+
+    // }, 24 * 60 * 60 * 1000);
   }
 
   const connectWallet = async () => {
