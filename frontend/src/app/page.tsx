@@ -29,7 +29,21 @@ export default function Home() {
 
   const placeBet = async () => {
     // User signs the transaction to give ___ ETH to contract for betting
+
+
     // Use Neynar --> bot makes a cast with the custom frame
+    // let betPost = `@${bettorUsername} is betting ${ethAmount} ETH that ${castAuthorUsername}'s cast will get more than ${castLikes} likes in 24 hrs.\nBet against them:`;
+    // await neynarClient.publishCast(
+    //   process.env.SIGNER_UUID!,
+    //   betPost,
+    //   {
+    //     embeds: [{
+    //       url: `https://bet-viral.vercel.app/challenge/${authorUsername}`
+    //     }]
+    //   }
+    // );
+
+
     // Bet data is published to MongoDB
 
     // setTimeout of 2 mins, then use Neynar to delete the cast
