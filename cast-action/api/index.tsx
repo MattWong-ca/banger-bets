@@ -101,6 +101,7 @@ app.frame("/add/:numberOfLikes", (c) => {
       >
         <div
           style={{
+            fontFamily: "manrope",
             color: "white",
             fontSize: 60,
             padding: "0 120px",
@@ -108,7 +109,7 @@ app.frame("/add/:numberOfLikes", (c) => {
           }}
         >
           {/* NOTE: variables don't work unless they're inside {``} */}
-          {`Add Cast Action with ${numberOfLikes} likes`}
+          {`💥BANGER!💥\nBet on casts going viral and win ETH`}
         </div>
       </div>
     ),
