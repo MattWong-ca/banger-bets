@@ -8,17 +8,19 @@ import { createSystem } from 'frog/ui'
 
 // const ADD_ACTION_URL = "https://warpcast.com/~/add-cast-action?url=https://betrality.vercel.app/api/bet";
 
-export const {
-  Box
-} = createSystem({
-  colors: {
-    text: '#000000',
-    background: '#ffffff',
-    blue: '#0070f3',
-    green: '#00ff00',
-    red: '#ff0000',
-    orange: '#ffaa00',
-  },
+export const app = new Frog({
+  title: "BANGER!",
+  assetsPath: "/",
+  basePath: "/api",
+  hub: neynarHub({ apiKey: "NEYNAR_FROG_FM" })
+}).use(
+  neynar({
+    apiKey: "NEYNAR_FROG_FM",
+    features: ["interactor", "cast"],
+  })
+);
+
+const { Box } = createSystem({
   fonts: {
     default: [
       {
@@ -40,41 +42,6 @@ export const {
     ],
   },
 })
-
-export const app = new Frog({
-  title: "BANGER!",
-  assetsPath: "/",
-  basePath: "/api",
-  hub: neynarHub({ apiKey: "NEYNAR_FROG_FM" })
-}).use(
-  neynar({
-    apiKey: "NEYNAR_FROG_FM",
-    features: ["interactor", "cast"],
-  })
-);
-
-// const { Box } = createSystem({
-//   fonts: {
-//     default: [
-//       {
-//         name: 'Open Sans',
-//         source: 'google',
-//         weight: 400,
-//       },
-//       {
-//         name: 'Open Sans',
-//         source: 'google',
-//         weight: 600,
-//       },
-//     ],
-//     manrope: [
-//       {
-//         name: 'Manrope',
-//         source: 'google',
-//       },
-//     ],
-//   },
-// })
 // This is the frame the user sees when they click on the cast action
 app.frame('/view', async (c) => {
   const castAuthor = c.var.cast?.author.username;
@@ -144,38 +111,31 @@ app.frame("/add", (c) => {
 
   return c.res({
     image: (
-      <Box
-        fontFamily="madimi"
-        color="blue"
-        fontSize="64"
-        padding="128"
-        whiteSpace="pre-wrap"
+      <div
+        style={{
+          alignItems: "center",
+          background: "black",
+          backgroundSize: "100% 100%",
+          height: "100%",
+          textAlign: "center",
+          width: "100%",
+          display: "flex",
+        }}
       >
-        {`💥BANGER!💥\nBet on casts going viral with Chiliz Fan Tokens`}
-      </Box>
-      // <div
-      //   style={{
-      //     alignItems: "center",
-      //     background: "black",
-      //     backgroundSize: "100% 100%",
-      //     height: "100%",
-      //     textAlign: "center",
-      //     width: "100%",
-      //     display: "flex",
-      //   }}
-      // >
-      //   <div
-      //     style={{
-      //       color: "white",
-      //       fontSize: 60,
-      //       padding: "0 120px",
-      //       whiteSpace: "pre-wrap",
-      //     }}
-      //   >
-      //     {/* NOTE: variables don't work unless they're inside {``} */}
-      //     {`💥BANGER!💥\nBet on casts going viral with Chiliz Fan Tokens`}
-      //   </div>
-      // </div>
+        <div
+          style={{
+            color: "white",
+            fontSize: 60,
+            padding: "0 120px",
+            whiteSpace: "pre-wrap",
+          }}
+        >
+          {/* NOTE: variables don't work unless they're inside {``} */}
+          <Box fontFamily="madimi">
+          {`💥BANGER!💥\nBet on casts going viral with Chiliz Fan Tokens`}
+          </Box>
+        </div>
+      </div>
     ),
     intents: [
       <Button.AddCastAction action="/bet">Add cast action</Button.AddCastAction>,
