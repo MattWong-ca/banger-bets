@@ -124,7 +124,7 @@ app.frame("/add", (c) => {
       >
         <Box
           fontFamily="manrope"
-          // color=""
+          color="blue"
           fontSize="64"
           padding="128"
           whiteSpace="pre-wrap"
