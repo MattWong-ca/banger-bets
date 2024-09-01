@@ -53,28 +53,28 @@ export const app = new Frog({
   })
 );
 
-const { Box } = createSystem({
-  fonts: {
-    default: [
-      {
-        name: 'Open Sans',
-        source: 'google',
-        weight: 400,
-      },
-      {
-        name: 'Open Sans',
-        source: 'google',
-        weight: 600,
-      },
-    ],
-    manrope: [
-      {
-        name: 'Manrope',
-        source: 'google',
-      },
-    ],
-  },
-})
+// const { Box } = createSystem({
+//   fonts: {
+//     default: [
+//       {
+//         name: 'Open Sans',
+//         source: 'google',
+//         weight: 400,
+//       },
+//       {
+//         name: 'Open Sans',
+//         source: 'google',
+//         weight: 600,
+//       },
+//     ],
+//     manrope: [
+//       {
+//         name: 'Manrope',
+//         source: 'google',
+//       },
+//     ],
+//   },
+// })
 // This is the frame the user sees when they click on the cast action
 app.frame('/view', async (c) => {
   const castAuthor = c.var.cast?.author.username;
