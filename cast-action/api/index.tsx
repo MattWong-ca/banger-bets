@@ -110,11 +110,9 @@ app.frame("/add", (c) => {
 
   return c.res({
     image: (
-      <div style={{ backgroundColor: "black", color: 'white'}}>
-        <Box fontFamily="madimi">
+        <Box fontFamily={{ custom: 'Times New Roman' }}>
           {`💥BANGER!💥\nBet on casts going viral with Chiliz Fan Tokens`}
         </Box>
-      </div>
       // <div
       //   style={{
       //     alignItems: "center",
