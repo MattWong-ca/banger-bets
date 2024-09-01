@@ -4,6 +4,7 @@ import { serveStatic } from 'frog/serve-static'
 import { neynar as neynarHub } from "frog/hubs";
 import { neynar } from "frog/middlewares";
 import { handle } from "frog/vercel";
+import { createSystem } from 'frog/ui'
 
 // const ADD_ACTION_URL = "https://warpcast.com/~/add-cast-action?url=https://betrality.vercel.app/api/bet";
 
@@ -19,6 +20,28 @@ export const app = new Frog({
   })
 );
 
+const { Box } = createSystem({
+  fonts: {
+    default: [
+      {
+        name: 'Open Sans',
+        source: 'google',
+        weight: 400,
+      },
+      {
+        name: 'Open Sans',
+        source: 'google',
+        weight: 600,
+      },
+    ],
+    manrope: [
+      {
+        name: 'Manrope',
+        source: 'google',
+      },
+    ],
+  },
+})
 // This is the frame the user sees when they click on the cast action
 app.frame('/view', async (c) => {
   const castAuthor = c.var.cast?.author.username;
@@ -99,22 +122,26 @@ app.frame("/add", (c) => {
           display: "flex",
         }}
       >
-        <div
-          style={{
-            fontFamily: "manrope",
-            color: "white",
-            fontSize: 60,
-            padding: "0 120px",
-            whiteSpace: "pre-wrap",
-          }}
+        <Box
+          fontFamily="manrope"
+          // color=""
+          fontSize="64"
+          padding="128"
+          whiteSpace="pre-wrap"
+          // style={{
+          //   color: "white",
+          //   fontSize: 60,
+          //   padding: "0 120px",
+          //   whiteSpace: "pre-wrap",
+          // }}
         >
           {/* NOTE: variables don't work unless they're inside {``} */}
-          {`💥BANGER!💥\nBet on casts going viral and win ETH`}
-        </div>
+          {`💥BANGER!💥\nBet on casts going viral with Chiliz Fan Tokens`}
+        </Box>
       </div>
     ),
     intents: [
-      <Button.AddCastAction action="/bet">Add</Button.AddCastAction>,
+      <Button.AddCastAction action="/bet">Add cast action</Button.AddCastAction>,
     ],
   });
 });
