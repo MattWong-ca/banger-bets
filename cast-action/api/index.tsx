@@ -4,7 +4,7 @@ import { serveStatic } from 'frog/serve-static'
 import { neynar as neynarHub } from "frog/hubs";
 import { neynar } from "frog/middlewares";
 import { handle } from "frog/vercel";
-import { Manrope } from '@next/font/google';
+import { createSystem } from 'frog/ui';
 
 // const ADD_ACTION_URL = "https://warpcast.com/~/add-cast-action?url=https://betrality.vercel.app/api/bet";
 
@@ -82,42 +82,62 @@ app.frame('/view', async (c) => {
     ],
   })
 })
-
-const manrope = Manrope({
-  subsets: ['latin'], // Adjust based on your needs
-  weight: ['400', '700'], // Choose the weights you need
-});
-
+const { Box } = createSystem({
+  fonts: {
+    default: [
+      {
+        name: 'Open Sans',
+        source: 'google',
+        weight: 400,
+      },
+      {
+        name: 'Open Sans',
+        source: 'google',
+        weight: 600,
+      },
+    ],
+    madimi: [
+      {
+        name: 'Madimi One',
+        source: 'google',
+      },
+    ],
+  },
+})
 // For adding the cast action
 app.frame("/add", (c) => {
   // const numberOfLikes = c.req.param('numberOfLikes');
 
   return c.res({
     image: (
-      <div
-        style={{
-          alignItems: "center",
-          background: "black",
-          backgroundSize: "100% 100%",
-          height: "100%",
-          textAlign: "center",
-          width: "100%",
-          display: "flex",
-        }}
-      >
-        <div
-          className={manrope.className}
-          style={{
-            color: "white",
-            fontSize: 60,
-            padding: "0 120px",
-            whiteSpace: "pre-wrap",
-          }}
-        >
-          {/* NOTE: variables don't work unless they're inside {``} */}
+      <div style={{ backgroundColor: "black", color: 'white'}}>
+        <Box fontFamily="madimi">
           {`💥BANGER!💥\nBet on casts going viral with Chiliz Fan Tokens`}
-        </div>
+        </Box>
       </div>
+      // <div
+      //   style={{
+      //     alignItems: "center",
+      //     background: "black",
+      //     backgroundSize: "100% 100%",
+      //     height: "100%",
+      //     textAlign: "center",
+      //     width: "100%",
+      //     display: "flex",
+      //   }}
+      // >
+      //   <div
+      //     style={{
+      //       color: "white",
+      //       fontSize: 60,
+      //       padding: "0 120px",
+      //       whiteSpace: "pre-wrap",
+      //     }}
+      //   >
+      //     {/* NOTE: variables don't work unless they're inside {``} */}
+          
+      //   </div>
+      // </div>
     ),
     intents: [
       <Button.AddCastAction action="/bet">Add cast action</Button.AddCastAction>,

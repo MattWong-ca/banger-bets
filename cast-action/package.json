@@ -8,7 +8,6 @@
     "deploy": "vercel"
   },
   "dependencies": {
-    "@next/font": "^14.2.7",
     "@neynar/nodejs-sdk": "^1.16.1",
     "frog": "latest",
     "hono": "^4"
