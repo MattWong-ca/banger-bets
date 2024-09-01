@@ -69,7 +69,6 @@ app.frame('/view', async (c) => {
     image: (
       <div
         style={{
-          alignItems: 'center',
           background: 'black',
           backgroundSize: '100% 100%',
           display: 'flex',
