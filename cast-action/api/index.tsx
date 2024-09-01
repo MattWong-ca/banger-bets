@@ -7,9 +7,31 @@ import { handle } from "frog/vercel";
 import { createSystem } from 'frog/ui';
 
 // const ADD_ACTION_URL = "https://warpcast.com/~/add-cast-action?url=https://betrality.vercel.app/api/bet";
-
+const { Box, vars } = createSystem({
+  fonts: {
+    default: [
+      {
+        name: 'Open Sans',
+        source: 'google',
+        weight: 400,
+      },
+      {
+        name: 'Open Sans',
+        source: 'google',
+        weight: 600,
+      },
+    ],
+    madimi: [
+      {
+        name: 'Madimi One',
+        source: 'google',
+      },
+    ],
+  },
+})
 export const app = new Frog({
   title: "BANGER!",
+  ui: { vars },
   assetsPath: "/",
   basePath: "/api",
   hub: neynarHub({ apiKey: "NEYNAR_FROG_FM" })
@@ -82,35 +104,14 @@ app.frame('/view', async (c) => {
     ],
   })
 })
-const { Box } = createSystem({
-  fonts: {
-    default: [
-      {
-        name: 'Open Sans',
-        source: 'google',
-        weight: 400,
-      },
-      {
-        name: 'Open Sans',
-        source: 'google',
-        weight: 600,
-      },
-    ],
-    madimi: [
-      {
-        name: 'Madimi One',
-        source: 'google',
-      },
-    ],
-  },
-})
+
 // For adding the cast action
 app.frame("/add", (c) => {
   // const numberOfLikes = c.req.param('numberOfLikes');
 
   return c.res({
     image: (
-        <Box fontFamily={{ custom: 'Times New Roman' }}>
+        <Box fontFamily="madimi">
           {`💥BANGER!💥\nBet on casts going viral with Chiliz Fan Tokens`}
         </Box>
       // <div
