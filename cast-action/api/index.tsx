@@ -8,6 +8,39 @@ import { createSystem } from 'frog/ui'
 
 // const ADD_ACTION_URL = "https://warpcast.com/~/add-cast-action?url=https://betrality.vercel.app/api/bet";
 
+export const {
+  Box
+} = createSystem({
+  colors: {
+    text: '#000000',
+    background: '#ffffff',
+    blue: '#0070f3',
+    green: '#00ff00',
+    red: '#ff0000',
+    orange: '#ffaa00',
+  },
+  fonts: {
+    default: [
+      {
+        name: 'Open Sans',
+        source: 'google',
+        weight: 400,
+      },
+      {
+        name: 'Open Sans',
+        source: 'google',
+        weight: 600,
+      },
+    ],
+    madimi: [
+      {
+        name: 'Madimi One',
+        source: 'google',
+      },
+    ],
+  },
+})
+
 export const app = new Frog({
   title: "BANGER!",
   assetsPath: "/",
@@ -111,30 +144,38 @@ app.frame("/add", (c) => {
 
   return c.res({
     image: (
-      <div
-        style={{
-          alignItems: "center",
-          background: "black",
-          backgroundSize: "100% 100%",
-          height: "100%",
-          textAlign: "center",
-          width: "100%",
-          display: "flex",
-        }}
+      <Box
+        fontFamily="madimi"
+        color="blue"
+        fontSize="64"
+        padding="128"
+        whiteSpace="pre-wrap"
       >
-        <div
-          fontFamily="manrope"
-          style={{
-            color: "white",
-            fontSize: 60,
-            padding: "0 120px",
-            whiteSpace: "pre-wrap",
-          }}
-        >
-          {/* NOTE: variables don't work unless they're inside {``} */}
-          {`💥BANGER!💥\nBet on casts going viral with Chiliz Fan Tokens`}
-        </div>
-      </div>
+        {`💥BANGER!💥\nBet on casts going viral with Chiliz Fan Tokens`}
+      </Box>
+      // <div
+      //   style={{
+      //     alignItems: "center",
+      //     background: "black",
+      //     backgroundSize: "100% 100%",
+      //     height: "100%",
+      //     textAlign: "center",
+      //     width: "100%",
+      //     display: "flex",
+      //   }}
+      // >
+      //   <div
+      //     style={{
+      //       color: "white",
+      //       fontSize: 60,
+      //       padding: "0 120px",
+      //       whiteSpace: "pre-wrap",
+      //     }}
+      //   >
+      //     {/* NOTE: variables don't work unless they're inside {``} */}
+      //     {`💥BANGER!💥\nBet on casts going viral with Chiliz Fan Tokens`}
+      //   </div>
+      // </div>
     ),
     intents: [
       <Button.AddCastAction action="/bet">Add cast action</Button.AddCastAction>,
