@@ -13,22 +13,20 @@ const { Box, vars } = createSystem({
       {
         name: 'Open Sans',
         source: 'google',
-        weight: 400,
-      },
-      {
-        name: 'Open Sans',
-        source: 'google',
+        style: 'italic',
         weight: 600,
-      },
+      }
     ],
-    madimi: [
+    manrope: [
       {
-        name: 'Madimi One',
+        name: 'Manrope',
         source: 'google',
+        weight: 700,
       },
     ],
   },
 })
+
 export const app = new Frog({
   title: "BANGER!",
   ui: { vars },
@@ -111,32 +109,51 @@ app.frame("/add", (c) => {
 
   return c.res({
     image: (
-        <Box fontFamily="madimi">
-          {`💥BANGER!💥\nBet on casts going viral with Chiliz Fan Tokens`}
+      <div
+      style={{
+        alignItems: 'center',
+        background: 'black',
+        backgroundSize: '100% 100%',
+        display: 'flex',
+        flexDirection: 'column',
+        flexWrap: 'nowrap',
+        height: '100%',
+        justifyContent: 'center',
+        textAlign: 'center',
+        width: '100%',
+      }}
+    >
+      <div
+        style={{
+          color: 'white',
+          fontSize: 60,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          letterSpacing: '-0.025em',
+          lineHeight: 1.4,
+          marginBottom: '25',
+          padding: '0 120px',
+          whiteSpace: 'pre-wrap',
+        }}
+      >
+        <Box
+          fontSize="64"
+          fontStyle="italic"
+          fontFamily="default"
+          fontWeight="600">
+          {`💥BANGER!💥`}
         </Box>
-      // <div
-      //   style={{
-      //     alignItems: "center",
-      //     background: "black",
-      //     backgroundSize: "100% 100%",
-      //     height: "100%",
-      //     textAlign: "center",
-      //     width: "100%",
-      //     display: "flex",
-      //   }}
-      // >
-      //   <div
-      //     style={{
-      //       color: "white",
-      //       fontSize: 60,
-      //       padding: "0 120px",
-      //       whiteSpace: "pre-wrap",
-      //     }}
-      //   >
-      //     {/* NOTE: variables don't work unless they're inside {``} */}
-          
-      //   </div>
-      // </div>
+        <Box
+          fontSize="24"
+          fontFamily="manrope"
+          fontWeight="700"
+        >
+          {/* NOTE: variables don't work unless they're inside {``} */}
+          {'Bet on casts going viral with Chiliz Fan Tokens'}
+        </Box>
+      </div>
+    </div>
     ),
     intents: [
       <Button.AddCastAction action="/bet">Add cast action</Button.AddCastAction>,
