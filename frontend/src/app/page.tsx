@@ -54,13 +54,14 @@ export default function Home() {
     // }
 
     // Use Neynar --> bot makes a cast with the custom frame
+    // bettorUsername, castAuthorUsername from URL params
     // let betPost = `@${bettorUsername} is betting ${betAmount} ETH that ${castAuthorUsername}'s cast will get more than ${likesPrediction} likes in 24 hrs.\nBet against them:`;
     // const betCast = await neynarClient.publishCast(
     //   process.env.SIGNER_UUID!,
     //   betPost,
     //   {
     //     embeds: [{
-    // THE OG BETTOR ADDRESS WILL BE PASSED TO THE URL BUTTON THAT THE USER CLICKS SO IT CAN APPEAR AT TOP OF CHALLENGE PAGE BET URL
+    // THE OG BETTOR ADDRESS (userAddress) WILL BE PASSED TO THE URL BUTTON THAT THE USER CLICKS SO IT CAN APPEAR AT TOP OF CHALLENGE PAGE BET URL
     //       url: `https://bet-viral.vercel.app/challenge/${authorUsername}/${ogbettorAddress}`
     //     }]
     //   }
@@ -144,7 +145,7 @@ export default function Home() {
       <div className="flex-grow flex items-center justify-center px-4">
         <div className="relative bg-white rounded-lg w-[80vw] max-w-[1920px] h-[60vh] flex items-center justify-center">
           <h1 className="absolute -top-32 left-1/2 transform -translate-x-1/2 text-white text-7xl font-bold italic">
-            BetViral
+            💥 BANGER!💥
           </h1>
           <div className="flex w-full h-full">
             <div className="w-1/2 flex items-center justify-center">
