@@ -83,8 +83,8 @@ app.frame('/view', async (c) => {
 })
 
 // For adding the cast action
-app.frame("/add/:numberOfLikes", (c) => {
-  const numberOfLikes = c.req.param('numberOfLikes');
+app.frame("/add", (c) => {
+  // const numberOfLikes = c.req.param('numberOfLikes');
 
   return c.res({
     image: (
