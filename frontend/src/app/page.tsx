@@ -145,7 +145,7 @@ export default function Home() {
       <div className="flex-grow flex items-center justify-center px-4">
         <div className="relative bg-white rounded-lg w-[80vw] max-w-[1920px] h-[60vh] flex items-center justify-center">
           <h1 className="absolute -top-32 left-1/2 transform -translate-x-1/2 text-white text-7xl font-bold italic">
-            💥 BANGER!💥
+            💥BANGER!💥
           </h1>
           <div className="flex w-full h-full">
             <div className="w-1/2 flex items-center justify-center">
