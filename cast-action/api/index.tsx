@@ -122,22 +122,18 @@ app.frame("/add", (c) => {
           display: "flex",
         }}
       >
-        <Box
+        <div
           fontFamily="manrope"
-          color="blue"
-          fontSize="64"
-          padding="128"
-          whiteSpace="pre-wrap"
-          // style={{
-          //   color: "white",
-          //   fontSize: 60,
-          //   padding: "0 120px",
-          //   whiteSpace: "pre-wrap",
-          // }}
+          style={{
+            color: "white",
+            fontSize: 60,
+            padding: "0 120px",
+            whiteSpace: "pre-wrap",
+          }}
         >
           {/* NOTE: variables don't work unless they're inside {``} */}
           {`💥BANGER!💥\nBet on casts going viral with Chiliz Fan Tokens`}
-        </Box>
+        </div>
       </div>
     ),
     intents: [
