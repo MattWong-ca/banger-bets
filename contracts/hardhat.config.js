@@ -8,6 +8,11 @@ module.exports = {
     chz: {
       url: "https://spicy-rpc.chiliz.com/",
       accounts: [process.env.PRIVATE_KEY]
-    }
+    },
+    'base-sepolia': {
+      url: 'https://sepolia.base.org',
+      accounts: [process.env.PRIVATE_KEY],
+      gasPrice: 1000000000,
+    },
   }
 };

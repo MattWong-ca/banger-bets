@@ -9,7 +9,7 @@ contract Bet {
         bool isChallenged;
     }
 
-    mapping(address => BetInfo) public bets;
+    mapping(address => BetInfo) public bets; // This means for now they can only bet once
     address[] public betAddresses;  // List of addresses that have placed a bet
 
     // Player 1 places a bet
