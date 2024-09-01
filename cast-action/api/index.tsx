@@ -23,6 +23,7 @@ export const app = new Frog({
 app.frame('/view', async (c) => {
   const castAuthor = c.var.cast?.author.username;
   const castHash = c.var.cast?.hash;
+  const interactor = c.var.interactor?.username;
 
   // 27 - 43: Fetch the cast likes from Neynar API
   async function fetchLikes(url: string) {
@@ -70,14 +71,13 @@ app.frame('/view', async (c) => {
             whiteSpace: 'pre-wrap',
           }}
         >
-          {`Bet on @${castAuthor}'s cast going over or under ${castLikes * 10} likes?`}
+          {`@${castAuthor}'s cast has ${castLikes} likes...\nThink it's a banger? Bet on it!`}
         </div>
       </div>
     ),
     intents: [
       // This should link them to web UI
-      <Button.Link href={`https://bet-viral.vercel.app/?${castHash}?over?${castLikes * 10}`}>Over</Button.Link>,
-      <Button.Link href={`https://bet-viral.vercel.app/?${castHash}?under?${castLikes * 10}`}>Under</Button.Link>
+      <Button.Link href={`https://bet-viral.vercel.app/?${castHash}?${castLikes}?${interactor}?${castAuthor}`}>BET</Button.Link>,
     ],
   })
 })

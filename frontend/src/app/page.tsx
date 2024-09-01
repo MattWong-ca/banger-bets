@@ -10,6 +10,7 @@ export default function Home() {
   const [userAddress, setUserAddress] = useState('');
   const [fanTokensAmount, setFanTokensAmount] = useState(0);
   const [betAmount, setBetAmount] = useState('');
+  const [likesPrediction, setLikesPrediction] = useState('');
   // const [data, setData] = useState(null);
 
   const getCHZBalance = async () => {
@@ -53,13 +54,14 @@ export default function Home() {
     // }
 
     // Use Neynar --> bot makes a cast with the custom frame
-    // let betPost = `@${bettorUsername} is betting ${ethAmount} ETH that ${castAuthorUsername}'s cast will get more than ${castLikes} likes in 24 hrs.\nBet against them:`;
+    // let betPost = `@${bettorUsername} is betting ${betAmount} ETH that ${castAuthorUsername}'s cast will get more than ${likesPrediction} likes in 24 hrs.\nBet against them:`;
     // const betCast = await neynarClient.publishCast(
     //   process.env.SIGNER_UUID!,
     //   betPost,
     //   {
     //     embeds: [{
-    //       url: `https://bet-viral.vercel.app/challenge/${authorUsername}`
+    // THE OG BETTOR ADDRESS WILL BE PASSED TO THE URL BUTTON THAT THE USER CLICKS SO IT CAN APPEAR AT TOP OF CHALLENGE PAGE BET URL
+    //       url: `https://bet-viral.vercel.app/challenge/${authorUsername}/${ogbettorAddress}`
     //     }]
     //   }
     // );
@@ -118,6 +120,10 @@ export default function Home() {
     setBetAmount(e.target.value);
   };
 
+  const handleLikesPredictionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLikesPrediction(e.target.value);
+  };
+
   return (
     <main className="bg-black min-h-screen flex flex-col">
       <nav className="flex justify-between items-center p-4 text-white">
@@ -147,22 +153,53 @@ export default function Home() {
               </div>
             </div>
             <div className="w-1/2 p-8 flex flex-col justify-center items-start">
-              <p className="text-black text-xl mb-4">
-                Likes in 24 hrs: more than 1280
-              </p>
+            <div className="flex items-center mb-4">
+                <p className="text-black text-xl mr-2">
+                  Likes in 24 hrs:
+                </p>
+                <input
+                  type="number"
+                  min="0"
+                  value={likesPrediction}
+                  onChange={handleLikesPredictionChange}
+                  className="border border-black rounded px-2 py-1 w-24"
+                  placeholder="0"
+                  style={{ MozAppearance: 'textfield' }}
+                />
+                <style jsx>{`
+                  input[type=number]::-webkit-outer-spin-button,
+                  input[type=number]::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                  }
+                  input[type=number] {
+                    -moz-appearance: textfield;
+                  }
+                `}</style>
+              </div>
               <div className="flex items-center mb-4">
                 <p className="text-black text-xl mr-2">
                   Bet amount (ETH):
                 </p>
                 <input
                   type="number"
-                  step="0.01"
                   min="0"
                   value={betAmount}
                   onChange={handleBetAmountChange}
                   className="border border-black rounded px-2 py-1 w-24"
                   placeholder="0.00"
+                  style={{ MozAppearance: 'textfield' }}
                 />
+                <style jsx>{`
+                  input[type=number]::-webkit-outer-spin-button,
+                  input[type=number]::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                  }
+                  input[type=number] {
+                    -moz-appearance: textfield;
+                  }
+                `}</style>
               </div>
               {fanTokensAmount > 0 ? (
                 <span className="bg-green-500 text-white text-sm px-2 py-1 rounded mb-4">
