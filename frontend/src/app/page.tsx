@@ -155,7 +155,7 @@ export default function Home() {
               )}
               {
                 fanTokensAmount > 0 ? (
-                  <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-lg font-bold">
+                  <button onClick={placeBet} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-lg font-bold">
                     🔥 BET
                   </button>
                 ) : (
