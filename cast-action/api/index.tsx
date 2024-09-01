@@ -6,7 +6,8 @@ import { neynar } from "frog/middlewares";
 import { handle } from "frog/vercel";
 import { createSystem } from 'frog/ui';
 
-// const ADD_ACTION_URL = "https://warpcast.com/~/add-cast-action?url=https://betrality.vercel.app/api/bet";
+// const ADD_ACTION_URL = "https://warpcast.com/~/add-cast-action?url=https://bangerbets.vercel.app/api/bet";
+
 const { Box, vars } = createSystem({
   fonts: {
     default: [
@@ -29,7 +30,7 @@ const { Box, vars } = createSystem({
 
 export const app = new Frog({
   title: "BANGER!",
-  ui: { vars },
+  ui: { vars }, // NOTE: This can be added to Frog docs, as it wasn't there
   assetsPath: "/",
   basePath: "/api",
   hub: neynarHub({ apiKey: "NEYNAR_FROG_FM" })
@@ -105,8 +106,6 @@ app.frame('/view', async (c) => {
 
 // For adding the cast action
 app.frame("/add", (c) => {
-  // const numberOfLikes = c.req.param('numberOfLikes');
-
   return c.res({
     image: (
       <div
