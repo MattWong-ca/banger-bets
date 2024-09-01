@@ -49,7 +49,7 @@ app.frame('/view', async (c) => {
 
   // 27 - 43: Fetch the cast likes from Neynar API
   async function fetchLikes(url: string) {
-    const options = { method: 'GET', headers: { accept: 'application/json', api_key: 'NEYNAR_API_DOCS' }};
+    const options = { method: 'GET', headers: { accept: 'application/json', api_key: 'NEYNAR_API_DOCS' } };
     try {
       const response = await fetch(url, options);
       if (!response.ok) {
@@ -64,7 +64,50 @@ app.frame('/view', async (c) => {
   const url = `https://api.neynar.com/v2/farcaster/cast?identifier=${castHash}&type=hash`;
   const res = await fetchLikes(url);
   const castLikes = res.cast.reactions.likes_count;
-  // TO DO: make algo take into account replies, recasts, # of followers?
+
+  return c.res({
+    image: (
+      <div
+        style={{
+          alignItems: 'center',
+          background: 'black',
+          backgroundSize: '100% 100%',
+          display: 'flex',
+          flexDirection: 'column',
+          flexWrap: 'nowrap',
+          height: '100%',
+          justifyContent: 'center',
+          width: '100%',
+        }}
+      >
+        <div
+          style={{
+            color: 'white',
+            fontSize: 60,
+            display: 'flex',
+            fontStyle: 'normal',
+            letterSpacing: '-0.025em',
+            lineHeight: 1.9,
+            marginTop: 30,
+            padding: '0 120px',
+            whiteSpace: 'pre-wrap',
+          }}
+        >
+          <Box fontFamily="manrope" fontSize="32" fontWeight="700">
+            {`@${castAuthor}'s cast has ${castLikes} likes...\nThink it's a banger? 💥\nBet on it! 💰`}
+          </Box>
+        </div>
+      </div>
+    ),
+    intents: [
+      // This should link them to web UI
+      <Button.Link href={`https://banger-bets.vercel.app/?${castHash}?${castLikes}?${interactor}?${castAuthor}`}>BET</Button.Link>,
+    ],
+  })
+})
+
+// For adding the cast action
+app.frame("/add", (c) => {
   return c.res({
     image: (
       <div
@@ -85,74 +128,33 @@ app.frame('/view', async (c) => {
           style={{
             color: 'white',
             fontSize: 60,
-            fontStyle: 'normal',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
             letterSpacing: '-0.025em',
             lineHeight: 1.4,
-            marginTop: 30,
+            marginBottom: '25',
             padding: '0 120px',
             whiteSpace: 'pre-wrap',
           }}
         >
-          {`@${castAuthor}'s cast has ${castLikes} likes...\nThink it's a banger? Bet on it!`}
+          <Box
+            fontSize="64"
+            fontStyle="italic"
+            fontFamily="default"
+            fontWeight="600">
+            {`💥BANGER!💥`}
+          </Box>
+          <Box
+            fontSize="24"
+            fontFamily="manrope"
+            fontWeight="700"
+          >
+            {/* NOTE: variables don't work unless they're inside {``} */}
+            {'Bet on casts going viral with Chiliz Fan Tokens'}
+          </Box>
         </div>
       </div>
-    ),
-    intents: [
-      // This should link them to web UI
-      <Button.Link href={`https://bet-viral.vercel.app/?${castHash}?${castLikes}?${interactor}?${castAuthor}`}>BET</Button.Link>,
-    ],
-  })
-})
-
-// For adding the cast action
-app.frame("/add", (c) => {
-  return c.res({
-    image: (
-      <div
-      style={{
-        alignItems: 'center',
-        background: 'black',
-        backgroundSize: '100% 100%',
-        display: 'flex',
-        flexDirection: 'column',
-        flexWrap: 'nowrap',
-        height: '100%',
-        justifyContent: 'center',
-        textAlign: 'center',
-        width: '100%',
-      }}
-    >
-      <div
-        style={{
-          color: 'white',
-          fontSize: 60,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          letterSpacing: '-0.025em',
-          lineHeight: 1.4,
-          marginBottom: '25',
-          padding: '0 120px',
-          whiteSpace: 'pre-wrap',
-        }}
-      >
-        <Box
-          fontSize="64"
-          fontStyle="italic"
-          fontFamily="default"
-          fontWeight="600">
-          {`💥BANGER!💥`}
-        </Box>
-        <Box
-          fontSize="24"
-          fontFamily="manrope"
-          fontWeight="700"
-        >
-          {/* NOTE: variables don't work unless they're inside {``} */}
-          {'Bet on casts going viral with Chiliz Fan Tokens'}
-        </Box>
-      </div>
-    </div>
     ),
     intents: [
       <Button.AddCastAction action="/bet">Add cast action</Button.AddCastAction>,
