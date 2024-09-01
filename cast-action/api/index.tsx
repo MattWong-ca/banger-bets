@@ -8,7 +8,7 @@ import { handle } from "frog/vercel";
 // const ADD_ACTION_URL = "https://warpcast.com/~/add-cast-action?url=https://betrality.vercel.app/api/bet";
 
 export const app = new Frog({
-  title: "BetViral",
+  title: "BANGER!",
   assetsPath: "/",
   basePath: "/api",
   hub: neynarHub({ apiKey: "NEYNAR_FROG_FM" })
@@ -121,7 +121,7 @@ app.frame("/add/:numberOfLikes", (c) => {
 app.castAction("/bet", async (c) => {
   return c.frame({ path: '/view' })
 },
-  { name: "Bet on Virality", icon: "flame" }
+  { name: "BANGER!", icon: "flame" }
 );
 
 // @ts-ignore
