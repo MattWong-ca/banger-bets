@@ -2,8 +2,10 @@
 import { ethers } from 'ethers';
 import { useEffect, useState } from "react";
 import fanToken from "../utils/fanToken.json";
+// import betContract from "../utils/betContract.json"; 
 
 declare var window: any
+
 export default function Home() {
   const [userAddress, setUserAddress] = useState('');
   const [fanTokensAmount, setFanTokensAmount] = useState(0);
@@ -29,8 +31,26 @@ export default function Home() {
   }, [userAddress]);
 
   const placeBet = async () => {
-    // TO DO: User signs the transaction to give ___ ETH to contract for betting
+    // User signs the transaction to give ___ ETH to contract for betting
+    // if (!window.ethereum) {
+    //   alert("Please install MetaMask!");
+    //   return;
+    // }
+    // try {
+    //   await window.ethereum.request({ method: 'eth_requestAccounts' });
+    //   const provider = new ethers.BrowserProvider(window.ethereum);
+    //   const signer = await provider.getSigner();
+    //   const contractAddress = "0x..."; // TO DO: get contract address from deployment
+    //   const betContract = new ethers.Contract(contractAddress, betContractABI, signer);
 
+    //   const betAmountWei = ethers.parseEther(betAmount);
+    //   const tx = await betContract.bet({ value: betAmountWei });
+    //   await tx.wait();
+    //   console.log("Bet placed successfully!");
+    // } catch (error) {
+    //   console.error("Error placing bet:", error);
+    //   alert("Failed to place bet. Please try again.");
+    // }
 
     // Use Neynar --> bot makes a cast with the custom frame
     // let betPost = `@${bettorUsername} is betting ${ethAmount} ETH that ${castAuthorUsername}'s cast will get more than ${castLikes} likes in 24 hrs.\nBet against them:`;
