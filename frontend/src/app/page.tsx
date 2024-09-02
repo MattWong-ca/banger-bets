@@ -223,9 +223,9 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="w-1/2 p-8 flex flex-col justify-center items-start">
+            <div className="w-1/2 flex flex-col justify-center items-start">
               <div className="flex items-center mb-4">
-                <p className="text-black text-xl mr-2">
+                <p className="text-black text-3xl mr-4 font-bold w-72">
                   Likes in 24 hrs:
                 </p>
                 <input
@@ -233,23 +233,13 @@ export default function Home() {
                   min="0"
                   value={likesPrediction}
                   onChange={handleLikesPredictionChange}
-                  className="border border-black rounded px-2 py-1 w-24"
+                  className="border border-black px-4 py-2 w-32 text-2xl"
                   placeholder="0"
                   style={{ MozAppearance: 'textfield' }}
                 />
-                <style jsx>{`
-                  input[type=number]::-webkit-outer-spin-button,
-                  input[type=number]::-webkit-inner-spin-button {
-                    -webkit-appearance: none;
-                    margin: 0;
-                  }
-                  input[type=number] {
-                    -moz-appearance: textfield;
-                  }
-                `}</style>
               </div>
               <div className="flex items-center mb-4">
-                <p className="text-black text-xl mr-2">
+                <p className="text-black text-3xl mr-4 font-bold w-72">
                   Bet amount (ETH):
                 </p>
                 <input
@@ -257,21 +247,12 @@ export default function Home() {
                   min="0"
                   value={betAmount}
                   onChange={handleBetAmountChange}
-                  className="border border-black rounded px-2 py-1 w-24"
+                  className="border border-black px-4 py-2 w-32 text-2xl"
                   placeholder="0.00"
                   style={{ MozAppearance: 'textfield' }}
                 />
-                <style jsx>{`
-                  input[type=number]::-webkit-outer-spin-button,
-                  input[type=number]::-webkit-inner-spin-button {
-                    -webkit-appearance: none;
-                    margin: 0;
-                  }
-                  input[type=number] {
-                    -moz-appearance: textfield;
-                  }
-                `}</style>
               </div>
+              <div className="pt-8">
               {fanTokensAmount > 0 ? (
                 <span className="bg-green-500 text-white text-sm px-2 py-1 rounded mb-4">
                   {fanTokensAmount} Fan Tokens in wallet
@@ -283,16 +264,17 @@ export default function Home() {
               )}
               {
                 fanTokensAmount > 0 ? (
-                  <button onClick={placeBet} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-lg font-bold">
+                  <button onClick={placeBet} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-lg font-bold mt-4" style={{ width: "433px" }}>
                     🔥 BET
                   </button>
                 ) : (
-                  <button disabled className="bg-gray-200 text-gray-400 px-4 py-2 rounded text-lg font-bold cursor-not-allowed">
+                  <button disabled className="bg-gray-200 text-gray-400 px-4 py-2 rounded text-lg font-bold cursor-not-allowed mt-4" style={{ width: "433px" }}>
                     BET
                   </button>
                 )
               }
-              <button onClick={getCHZBalance}>Refresh Balance</button>
+              </div>
+              {/* <button onClick={getCHZBalance}>Refresh Balance</button> */}
             </div>
           </div>
         </div>
