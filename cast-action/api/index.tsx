@@ -105,6 +105,78 @@ app.frame('/view', async (c) => {
   })
 })
 
+// What the BangerBets bot shows 
+app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) => {
+  const castHash = c.req.param('castHash');
+  const likes = c.req.param('likes');
+  const betAmount = c.req.param('betAmount');
+  const ogBettorAddress = c.req.param('ogBettorAddress');
+  // const challengeBettor = c.var.interactor?.username;
+
+  // 27 - 43: Fetch the cast info from Neynar API
+  async function fetchCast(url: string) {
+    const options = { method: 'GET', headers: { accept: 'application/json', api_key: 'NEYNAR_API_DOCS' } };
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} ${response.statusText}`);
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Fetch error:', error);
+    }
+  }
+  const url = `https://api.neynar.com/v2/farcaster/cast?identifier=${castHash}&type=hash`;
+  const res = await fetchCast(url);
+
+  const authorUsername = res.cast.author.username;
+  const authorDisplayName = res.cast.author.display_name;
+  const castText = res.cast.text;
+
+  return c.res({
+    image: (
+      <div
+        style={{
+          background: 'black',
+          backgroundSize: '100% 100%',
+          display: 'flex',
+          flexDirection: 'column',
+          flexWrap: 'nowrap',
+          height: '100%',
+          justifyContent: 'center',
+          width: '100%',
+        }}
+      >
+        <div
+          style={{
+            color: 'white',
+            fontSize: 60,
+            display: 'flex',
+            fontStyle: 'normal',
+            letterSpacing: '-0.025em',
+            lineHeight: 1.9,
+            marginTop: 30,
+            padding: '0 120px',
+            whiteSpace: 'pre-wrap',
+          }}
+        >
+          {/* This is where we show a pic of the cast */}
+          {/* <Box fontFamily="manrope" fontSize={{ custom: castAuthor!.length < 8 ? '62px' : '52px' }} fontWeight="700">
+            {`@${castAuthor}'s cast has ${castLikes} ${castLikes === 1 ? "like" : "likes"}...\nThink it's a banger? 💥\nBet on it! 💰`}
+          </Box> */}
+          {`${authorDisplayName} -- ${authorUsername}\n${castText}`}
+        </div>
+      </div>
+    ),
+    intents: [
+      <Button.Link href={`https://warpcast.com/${authorUsername}/${castHash}`}>View cast</Button.Link>,
+      // This should link them to web UI
+      <Button.Link href={`https://banger-bets.vercel.app/challenge/?${castHash}?${likes}?${betAmount}?${ogBettorAddress}`}>Challenge Bet</Button.Link>,
+    ],
+  })
+})
+
 // For adding the cast action
 app.frame("/add", (c) => {
   return c.res({
