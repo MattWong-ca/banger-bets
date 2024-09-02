@@ -8,7 +8,7 @@ import { createSystem } from 'frog/ui';
 
 // const ADD_ACTION_URL = "https://warpcast.com/~/add-cast-action?url=https://bangerbets.vercel.app/api/bet";
 
-const { Box, vars } = createSystem({
+const { Box, Text, Image, vars } = createSystem({
   fonts: {
     default: [
       {
@@ -22,9 +22,18 @@ const { Box, vars } = createSystem({
       {
         name: 'Manrope',
         source: 'google',
-        weight: 700,
+        weight: 400,
       },
+      {
+        name: 'Manrope',
+        source: 'google',
+        weight: 700,
+      }
     ],
+  },
+  colors: {
+    black: '#000000',
+    gray: '#808080'
   },
 })
 
@@ -138,34 +147,41 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
     image: (
       <div
         style={{
+          alignItems: 'center',
+          justifyContent: 'center',
           background: 'black',
           backgroundSize: '100% 100%',
           display: 'flex',
           flexDirection: 'column',
           flexWrap: 'nowrap',
           height: '100%',
-          justifyContent: 'center',
           width: '100%',
         }}
       >
         <div
           style={{
-            color: 'white',
-            fontSize: 10,
+            background: 'white',
+            width: '85%',
+            height: '75%',
+            color: 'black',
+            fontSize: 60,
             display: 'flex',
             fontStyle: 'normal',
             letterSpacing: '-0.025em',
-            lineHeight: 1.9,
-            marginTop: 30,
-            padding: '0 120px',
+            lineHeight: 1,
             whiteSpace: 'pre-wrap',
           }}
         >
-          {/* This is where we show a pic of the cast */}
-          {/* <Box fontFamily="manrope" fontSize={{ custom: castAuthor!.length < 8 ? '62px' : '52px' }} fontWeight="700">
-            {`@${castAuthor}'s cast has ${castLikes} ${castLikes === 1 ? "like" : "likes"}...\nThink it's a banger? 💥\nBet on it! 💰`}
-          </Box> */}
-          {`${authorDisplayName} -- ${authorUsername}\n${castText}`}
+          <div style={{ display: 'flex', margin: '18px' }}>
+            <Image borderRadius="256" width="52" height="52" src="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg" />
+            <Box fontFamily="manrope" fontWeight="400" marginLeft={{ custom: '18px' }} marginTop={{ custom: '12px' }}>
+              <div style={{ display: 'flex', marginBottom: '18px' }}>
+                <Text weight="700" font="manrope" color="black">Display Name&nbsp;&nbsp;&nbsp;</Text>
+                <Text weight="700" font="manrope" color="gray">@username</Text>
+              </div>
+              <div style={{ fontWeight: '400', width: '850px', color: 'black', wordWrap: 'break-word', overflowWrap: 'break-word', whiteSpace: 'normal' }}>This is the post text content. This is the post text content. This is the post text content. This is the post text content. This is the post text content. This is the post text content. This is the post text content.</div>
+            </Box>
+          </div>
         </div>
       </div>
     ),
