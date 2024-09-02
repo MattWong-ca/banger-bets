@@ -170,9 +170,9 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
       </div>
     ),
     intents: [
-      <Button.Link href={`https://warpcast.com/${authorUsername}/${castHash}`}>View cast</Button.Link>,
+      <Button.Link href={`https://warpcast.com/${authorUsername}/${castHash}`}>View Cast</Button.Link>,
       // This should link them to web UI
-      <Button.Link href={`https://banger-bets.vercel.app/challenge/?${castHash}?${likes}?${betAmount}?${ogBettorAddress}`}>Challenge Bet</Button.Link>,
+      <Button.Link href={`https://banger-bets.vercel.app/challenge/?castHash=${castHash}&likes=${likes}&betAmount=${betAmount}&ogBettorAddress=${ogBettorAddress}`}>Challenge Bet</Button.Link>,
     ],
   })
 })
