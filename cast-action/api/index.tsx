@@ -151,7 +151,7 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
         <div
           style={{
             color: 'white',
-            fontSize: 60,
+            fontSize: 10,
             display: 'flex',
             fontStyle: 'normal',
             letterSpacing: '-0.025em',
