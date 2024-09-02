@@ -180,7 +180,8 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
                 <Text weight="700" font="manrope" color="black">{`${authorDisplayName}`}&nbsp;&nbsp;&nbsp;</Text>
                 <Text weight="700" font="manrope" color="gray">{`@${authorUsername}`}</Text>
               </div>
-              <Box>{`${castText}`}</Box>
+              <Box fontFamily="manrope" fontWeight="400" color="black"  width={{ custom: '850px' }}>{`This is text content, this is more text and more words. This is text content, this is more text and more words. This is text content, this is more text and more words. This is text content, this is more text and more words.`}</Box>
+
             </Box>
           </div>
         </div>
