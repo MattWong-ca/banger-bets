@@ -218,7 +218,7 @@ export default function Home() {
                       <span className="font-bold text-black mr-2">{displayName || "Farcaster"}</span>
                       <span className="text-gray-500">@{bettorUsername || "farcaster"}</span>
                     </div>
-                    <p className="mt-1 text-black">{postText || "..."}</p>
+                    <p className="mt-1 text-black whitespace-pre-wrap">{postText || "..."}</p>
                   </div>
                 </div>
               </div>
@@ -244,6 +244,7 @@ export default function Home() {
                 </p>
                 <input
                   type="number"
+                  step="0.10"
                   min="0"
                   value={betAmount}
                   onChange={handleBetAmountChange}
