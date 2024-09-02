@@ -253,22 +253,19 @@ export default function Home() {
                 />
               </div>
               <div className="pt-8">
-              {fanTokensAmount > 0 ? (
-                <span className="bg-green-500 text-white text-sm px-2 py-1 rounded mb-4">
-                  {fanTokensAmount} Fan Tokens in wallet
-                </span>
-              ) : (
-                <span className="bg-red-500 text-white text-sm px-2 py-1 rounded mb-4">
-                  No Fan Tokens in wallet
-                </span>
-              )}
+              <p className={`text-lg font-bold italic ${fanTokensAmount > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                {fanTokensAmount > 0 
+                  ? `✅ ${fanTokensAmount} Fan Tokens in wallet`
+                  : '❌ No Fan Tokens in wallet'
+                }
+              </p>
               {
                 fanTokensAmount > 0 ? (
-                  <button onClick={placeBet} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-lg font-bold mt-4" style={{ width: "433px" }}>
+                  <button onClick={placeBet} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-xl font-bold mt-4" style={{ width: "433px" }}>
                     🔥 BET
                   </button>
                 ) : (
-                  <button disabled className="bg-gray-200 text-gray-400 px-4 py-2 rounded text-lg font-bold cursor-not-allowed mt-4" style={{ width: "433px" }}>
+                  <button disabled className="bg-gray-200 text-gray-400 px-4 py-2 rounded text-xl font-bold cursor-not-allowed mt-4" style={{ width: "433px" }}>
                     BET
                   </button>
                 )
