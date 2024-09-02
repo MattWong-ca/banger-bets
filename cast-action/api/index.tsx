@@ -142,7 +142,7 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
   const pfp = res.cast.author.pfp_url;
   const authorUsername = res.cast.author.username;
   const authorDisplayName = res.cast.author.display_name;
-  const castText = res.cast.text;
+  // const castText = res.cast.text;
 
   return c.res({
     image: (
