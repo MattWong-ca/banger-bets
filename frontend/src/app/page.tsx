@@ -83,7 +83,9 @@ export default function Home() {
 
   useEffect(() => {
     // connectWallet();
-    getCHZBalance();
+    if (userAddress) {
+      getCHZBalance();
+    }
   }, [userAddress]);
 
   const placeBet = async () => {
