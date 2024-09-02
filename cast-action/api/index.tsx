@@ -173,7 +173,7 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
           }}
         >
           <div style={{ display: 'flex', margin: '18px' }}>
-            <Image borderRadius="256" width="52" height="52" src="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg" />
+            {/* <Image borderRadius="256" width="52" height="52" src="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg" /> */}
             <Box fontFamily="manrope" fontWeight="400" marginLeft={{ custom: '18px' }} marginTop={{ custom: '12px' }}>
               <div style={{ display: 'flex', marginBottom: '18px' }}>
                 <Text weight="700" font="manrope" color="black">Display Name&nbsp;&nbsp;&nbsp;</Text>
