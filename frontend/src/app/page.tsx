@@ -12,6 +12,15 @@ export default function Home() {
   const [betAmount, setBetAmount] = useState('');
   const [likesPrediction, setLikesPrediction] = useState('');
   // const [data, setData] = useState(null);
+  // const [urlParams, setUrlParams] = useState<string[]>([]);
+
+
+  useEffect(() => {
+    const searchParams = window.location.search.substring(1); // Removes leading '?'
+    const params = searchParams.split('?');
+    // setUrlParams(params);
+    console.log("urlParams: ", params);
+  }, []);
 
   const getCHZBalance = async () => {
     try {
