@@ -3,6 +3,7 @@ import { ethers } from 'ethers';
 import { useEffect, useState } from "react";
 import fanToken from "../utils/fanToken.json";
 // import betContract from "../utils/betContract.json"; 
+import Image from 'next/image';
 
 declare var window: any
 
@@ -12,15 +13,55 @@ export default function Home() {
   const [betAmount, setBetAmount] = useState('');
   const [likesPrediction, setLikesPrediction] = useState('');
   // const [data, setData] = useState(null);
-  // const [urlParams, setUrlParams] = useState<string[]>([]);
+  const [urlParams, setUrlParams] = useState<string[]>([]);
+  const [image, setImage] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [bettorUsername, setBettorUsername] = useState('');
+  const [postText, setPostText] = useState('');
 
+  async function fetchLikes(url: string) {
+    const options = { method: 'GET', headers: { accept: 'application/json', api_key: 'NEYNAR_API_DOCS' } };
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} ${response.statusText}`);
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Fetch error:', error);
+    }
+  }
 
   useEffect(() => {
     const searchParams = window.location.search.substring(1); // Removes leading '?'
     const params = searchParams.split('?');
-    // setUrlParams(params);
+    setUrlParams(params);
     console.log("urlParams: ", params);
-  }, []);
+
+    const fetchCastLikes = async () => {
+      const url = `https://api.neynar.com/v2/farcaster/cast?identifier=${urlParams[0]}&type=hash`;
+      const res = await fetchLikes(url);
+      if (res && res.cast.author.pfp_url) {
+        setImage(res.cast.author.pfp_url);
+        console.log("image: ", image);
+      }
+      if (res && res.cast.author.display_name) {
+        setDisplayName(res.cast.author.display_name);
+        console.log("image: ", displayName);
+      }
+      if (res && res.cast.author.username) {
+        setBettorUsername(res.cast.author.username);
+        console.log("bettorUsername: ", bettorUsername);
+      }
+      if (res && res.cast.text) {
+        setPostText(res.cast.text);
+        console.log("postText: ", postText);
+      }
+    };
+
+    fetchCastLikes();
+  }, [image, displayName, bettorUsername, postText]);
 
   const getCHZBalance = async () => {
     try {
@@ -158,12 +199,27 @@ export default function Home() {
           </h1>
           <div className="flex w-full h-full">
             <div className="w-1/2 flex items-center justify-center">
-              <div className="w-96 h-96 bg-gray-300 flex items-center justify-center">
-                <span className="text-gray-600">Placeholder Image</span>
+              <div className="w-96 h-96 border-2 border-black p-4 pr-6">
+                <div className="flex items-start">
+                  <Image
+                    src={image || "https://pbs.twimg.com/profile_images/1546487688601096192/QoG0ZVgH_400x400.jpg"}
+                    alt="Profile picture"
+                    width={60}
+                    height={60}
+                    className="rounded-full"
+                  />
+                  <div className="ml-4">
+                    <div className="flex items-center">
+                      <span className="font-bold text-black mr-2">{displayName || "Farcaster"}</span>
+                      <span className="text-gray-500">@{bettorUsername || "farcaster"}</span>
+                    </div>
+                    <p className="mt-1 text-black">{postText || "..."}</p>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="w-1/2 p-8 flex flex-col justify-center items-start">
-            <div className="flex items-center mb-4">
+              <div className="flex items-center mb-4">
                 <p className="text-black text-xl mr-2">
                   Likes in 24 hrs:
                 </p>
