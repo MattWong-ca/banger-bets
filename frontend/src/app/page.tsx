@@ -16,7 +16,7 @@ export default function Home() {
   const [urlParams, setUrlParams] = useState<string[]>([]);
   const [image, setImage] = useState('');
   const [displayName, setDisplayName] = useState('');
-  const [bettorUsername, setBettorUsername] = useState('');
+  const [authorUsername, setAuthorUsername] = useState('');
   const [postText, setPostText] = useState('');
 
   async function fetchLikes(url: string) {
@@ -55,8 +55,8 @@ export default function Home() {
           console.log("displayName: ", displayName);
         }
         if (res && res.cast.author.username) {
-          setBettorUsername(res.cast.author.username);
-          console.log("bettorUsername: ", bettorUsername);
+          setAuthorUsername(res.cast.author.username);
+          console.log("authorUsername: ", authorUsername);
         }
         if (res && res.cast.text) {
           setPostText(res.cast.text);
@@ -66,7 +66,7 @@ export default function Home() {
     };
 
     fetchCastLikes();
-  }, [image, displayName, bettorUsername, postText, urlParams[0]]);
+  }, [image, displayName, authorUsername, postText, urlParams[0]]);
 
   const getCHZBalance = async () => {
     try {
@@ -107,7 +107,7 @@ export default function Home() {
     //   console.error("Error placing bet:", error);
     //   alert("Failed to place bet. Please try again.");
     // }
-
+    console.log(`@${urlParams[2]} is betting ${betAmount} ETH that @${authorUsername}'s cast will get more than ${likesPrediction} likes in 24 hrs.\n\nBet against them:`)
     // Use Neynar --> bot makes a cast with the custom frame
     // bettorUsername, castAuthorUsername from URL params
     // let betPost = `@${bettorUsername} is betting ${betAmount} ETH that ${castAuthorUsername}'s cast will get more than ${likesPrediction} likes in 24 hrs.\nBet against them:`;
@@ -116,6 +116,7 @@ export default function Home() {
     //   betPost,
     //   {
     //     embeds: [{
+    // THIS IS THE FRAME URL, NOT THE CHALLENGE PAGE URL
     // THE OG BETTOR ADDRESS (userAddress) WILL BE PASSED TO THE URL BUTTON THAT THE USER CLICKS SO IT CAN APPEAR AT TOP OF CHALLENGE PAGE BET URL
     //       url: `https://bet-viral.vercel.app/challenge/${authorUsername}/${ogbettorAddress}`
     //     }]
@@ -216,7 +217,7 @@ export default function Home() {
                   <div className="ml-4">
                     <div className="flex items-center">
                       <span className="font-bold text-black mr-2">{displayName || "Farcaster"}</span>
-                      <span className="text-gray-500">@{bettorUsername || "farcaster"}</span>
+                      <span className="text-gray-500">@{authorUsername || "farcaster"}</span>
                     </div>
                     <p className="mt-1 text-black whitespace-pre-wrap">{postText || "..."}</p>
                   </div>
