@@ -92,8 +92,8 @@ app.frame('/view', async (c) => {
             whiteSpace: 'pre-wrap',
           }}
         >
-          <Box fontFamily="manrope" fontSize="32" fontWeight="700">
-            {`@${castAuthor}'s cast has ${castLikes} likes...\nThink it's a banger? 💥\nBet on it! 💰`}
+          <Box fontFamily="manrope" fontSize={{ custom: castAuthor!.length < 8 ? '62px' : '52px' }} fontWeight="700">
+            {`@${castAuthor}'s cast has ${castLikes} ${castLikes === 1 ? "like" : "likes"}...\nThink it's a banger? 💥\nBet on it! 💰`}
           </Box>
         </div>
       </div>

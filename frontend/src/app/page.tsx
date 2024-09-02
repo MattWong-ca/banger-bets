@@ -40,28 +40,33 @@ export default function Home() {
     console.log("urlParams: ", params);
 
     const fetchCastLikes = async () => {
-      const url = `https://api.neynar.com/v2/farcaster/cast?identifier=${urlParams[0]}&type=hash`;
-      const res = await fetchLikes(url);
-      if (res && res.cast.author.pfp_url) {
-        setImage(res.cast.author.pfp_url);
-        console.log("image: ", image);
-      }
-      if (res && res.cast.author.display_name) {
-        setDisplayName(res.cast.author.display_name);
-        console.log("image: ", displayName);
-      }
-      if (res && res.cast.author.username) {
-        setBettorUsername(res.cast.author.username);
-        console.log("bettorUsername: ", bettorUsername);
-      }
-      if (res && res.cast.text) {
-        setPostText(res.cast.text);
-        console.log("postText: ", postText);
+      console.log("urlParams[0]: ", urlParams[0]);
+      // 0x00221a629cf888fb2ff5997fd4d25cd49272fc42
+      if (urlParams[0]) {
+        const url = `https://api.neynar.com/v2/farcaster/cast?identifier=${urlParams[0]}&type=hash`;
+        console.log("url: ", url);
+        const res = await fetchLikes(url);
+        if (res && res.cast.author.pfp_url) {
+          setImage(res.cast.author.pfp_url);
+          console.log("image: ", image);
+        }
+        if (res && res.cast.author.display_name) {
+          setDisplayName(res.cast.author.display_name);
+          console.log("displayName: ", displayName);
+        }
+        if (res && res.cast.author.username) {
+          setBettorUsername(res.cast.author.username);
+          console.log("bettorUsername: ", bettorUsername);
+        }
+        if (res && res.cast.text) {
+          setPostText(res.cast.text);
+          console.log("postText: ", postText);
+        }
       }
     };
 
     fetchCastLikes();
-  }, [image, displayName, bettorUsername, postText]);
+  }, [image, displayName, bettorUsername, postText, urlParams[0]]);
 
   const getCHZBalance = async () => {
     try {
