@@ -180,8 +180,7 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
                 <Text weight="700" font="manrope" color="black">{`${authorDisplayName}`}&nbsp;&nbsp;&nbsp;</Text>
                 <Text weight="700" font="manrope" color="gray">{`@${authorUsername}`}</Text>
               </div>
-              <Text color="black">{`This is text.`}</Text>
-
+              <div >{`just normal text`}</div>
             </Box>
           </div>
         </div>
