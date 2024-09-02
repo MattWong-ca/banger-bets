@@ -165,8 +165,7 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
           {/* <Box fontFamily="manrope" fontSize={{ custom: castAuthor!.length < 8 ? '62px' : '52px' }} fontWeight="700">
             {`@${castAuthor}'s cast has ${castLikes} ${castLikes === 1 ? "like" : "likes"}...\nThink it's a banger? 💥\nBet on it! 💰`}
           </Box> */}
-          {/* {`${authorDisplayName} -- ${authorUsername}\n${castText}`} */}
-          {`This is a test`}
+          {`${authorDisplayName} -- ${authorUsername}\n${castText}`}
         </div>
       </div>
     ),
