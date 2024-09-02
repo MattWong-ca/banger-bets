@@ -177,9 +177,9 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
             <Box fontFamily="manrope" fontWeight="400" marginLeft={{ custom: '18px' }} marginTop={{ custom: '12px' }}>
               <div style={{ display: 'flex', marginBottom: '18px' }}>
                 <Text weight="700" font="manrope" color="black">{`display name: ${authorDisplayName}`}</Text>
-                <Text weight="700" font="manrope" color="gray">@</Text>
+                <Text weight="700" font="manrope" color="gray">{`username: ${authorUsername}`}</Text>
               </div>
-              <div style={{ fontWeight: '400', width: '850px', color: 'black', wordWrap: 'break-word', overflowWrap: 'break-word', whiteSpace: 'normal' }}>asdf</div>
+              <div style={{ fontWeight: '400', width: '850px', color: 'black', wordWrap: 'break-word', overflowWrap: 'break-word', whiteSpace: 'normal' }}>{`text: ${castText}`}</div>
             </Box>
           </div>
         </div>
