@@ -173,6 +173,12 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
             whiteSpace: 'pre-wrap',
           }}
         >
+          <Box>
+            <Image borderRadius="256" width="52" height="52" src={pfp} />
+            <Text weight="700" font="manrope" color="black">{`${authorDisplayName}`}&nbsp;&nbsp;&nbsp;</Text>
+              <Text weight="700" font="manrope" color="gray">{`@${authorUsername}`}</Text>
+
+          </Box>
           <div>{`${castText}`}</div>
           {/* <div style={{ display: 'flex'}}>
               <Image borderRadius="256" width="52" height="52" src={pfp} />
@@ -185,17 +191,16 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
 
               </Box>
           </div> */}
-          {/* <div style={{ display: 'flex', margin: '18px' }}> */}
-            {/* <Image borderRadius="256" width="52" height="52" src={pfp} />
+          {/* <div style={{ display: 'flex', margin: '18px' }}>
+            <Image borderRadius="256" width="52" height="52" src={pfp} />
             <Box fontFamily="manrope" fontWeight="400" marginLeft={{ custom: '18px' }} marginTop={{ custom: '12px' }}>
               <div style={{ display: 'flex', marginBottom: '18px' }}>
                 <Text weight="700" font="manrope" color="black">{`${authorDisplayName}`}&nbsp;&nbsp;&nbsp;</Text>
                 <Text weight="700" font="manrope" color="gray">{`@${authorUsername}`}</Text>
-              </div> */}
-              {/* This works */}
-              {/* <div>{`${castText}`}</div> */}
-            {/* </Box> */}
-          {/* </div> */}
+              </div>
+              <div>{`${castText}`}</div>
+            </Box>
+          </div> */}
         </div>
       </div>
     ),
