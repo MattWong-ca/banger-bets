@@ -141,7 +141,6 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
 
   const pfp = res.cast.author.pfp_url;
   const authorUsername = res.cast.author.username;
-  const authorDisplayName = res.cast.author.display_name;
   const castText = res.cast.text;
 
   return c.res({
@@ -178,35 +177,6 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
             <Image borderRadius="256" width="52" height="52" src={pfp} />
           </Box>
           <Text weight="400" font="manrope" color="black">{`${castText}`}</Text>
-
-          {/* <Box>
-            <Image borderRadius="256" width="52" height="52" src={pfp} />
-            <Text weight="700" font="manrope" color="black">{`${authorDisplayName}`}&nbsp;&nbsp;&nbsp;</Text>
-              <Text weight="700" font="manrope" color="gray">{`@${authorUsername}`}</Text>
-
-          </Box>
-          <div>{`${castText}`}</div> */}
-          {/* <div style={{ display: 'flex'}}>
-              <Image borderRadius="256" width="52" height="52" src={pfp} />
-              <Box fontFamily="manrope" fontWeight="400" marginLeft={{ custom: '18px' }} marginTop={{ custom: '12px' }}>
-                <div style={{ display: 'flex', marginBottom: '18px' }}>
-                  <Text weight="700" font="manrope" color="black">{`${authorDisplayName}`}&nbsp;&nbsp;&nbsp;</Text>
-                  <Text weight="700" font="manrope" color="gray">{`@${authorUsername}`}</Text>
-                </div>
-                <div style={{ width: '850px' }}>{`${castText}`}</div>
-
-              </Box>
-          </div> */}
-          {/* <div style={{ display: 'flex', margin: '18px' }}>
-            <Image borderRadius="256" width="52" height="52" src={pfp} />
-            <Box fontFamily="manrope" fontWeight="400" marginLeft={{ custom: '18px' }} marginTop={{ custom: '12px' }}>
-              <div style={{ display: 'flex', marginBottom: '18px' }}>
-                <Text weight="700" font="manrope" color="black">{`${authorDisplayName}`}&nbsp;&nbsp;&nbsp;</Text>
-                <Text weight="700" font="manrope" color="gray">{`@${authorUsername}`}</Text>
-              </div>
-              <div>{`${castText}`}</div>
-            </Box>
-          </div> */}
         </div>
       </div>
     ),
