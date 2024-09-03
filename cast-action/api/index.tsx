@@ -162,6 +162,7 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
         <div
           style={{
             background: 'white',
+            padding: '18px',
             width: '85%',
             height: '75%',
             color: 'black',
@@ -173,13 +174,18 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
             whiteSpace: 'pre-wrap',
           }}
         >
-          <Box>
+          <Box marginRight="10">
+            <Image borderRadius="256" width="52" height="52" src={pfp} />
+          </Box>
+          <Text weight="400" font="manrope" color="black">{`${castText}`}</Text>
+
+          {/* <Box>
             <Image borderRadius="256" width="52" height="52" src={pfp} />
             <Text weight="700" font="manrope" color="black">{`${authorDisplayName}`}&nbsp;&nbsp;&nbsp;</Text>
               <Text weight="700" font="manrope" color="gray">{`@${authorUsername}`}</Text>
 
           </Box>
-          <div>{`${castText}`}</div>
+          <div>{`${castText}`}</div> */}
           {/* <div style={{ display: 'flex'}}>
               <Image borderRadius="256" width="52" height="52" src={pfp} />
               <Box fontFamily="manrope" fontWeight="400" marginLeft={{ custom: '18px' }} marginTop={{ custom: '12px' }}>
