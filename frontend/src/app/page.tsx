@@ -91,7 +91,7 @@ export default function Home() {
     }
   }, [userAddress]);
 
-  async function createBet(castHash: string, bettorAddress: string, bettorUsername: string, initialLikes: number) {
+  async function createBet(castHash: string, bettorAddress: string, bettorUsername: string, initialLikes: number, betAmount: number) {
     const { data, error } = await supabase
       .from('bets')
       .insert([
@@ -149,7 +149,7 @@ export default function Home() {
     // );
 
     // TO DO: Bet data is published to MongoDB
-    createBet(urlParams[0], userAddress, urlParams[2], Number(likesPrediction))
+    createBet(urlParams[0], userAddress, urlParams[2], Number(likesPrediction), Number(betAmount))
 
     // setTimeout of 2 mins, then use Neynar to delete the cast
     // setTimeout(async () => {
