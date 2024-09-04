@@ -94,7 +94,7 @@ export default function Home() {
     }
   }
 
-  const placeBet = async () => {
+  const placeChallengeBet = async () => {
     // User signs the transaction to give ___ ETH to contract for betting
     // if (!window.ethereum) {
     //   alert("Please install MetaMask!");
@@ -108,7 +108,7 @@ export default function Home() {
     //   const betContract = new ethers.Contract(contractAddress, betContractABI, signer);
 
     //   const betAmountWei = ethers.parseEther(betAmount);
-    //   const tx = await betContract.bet({ value: betAmountWei });
+    //   const tx = await betContract.challengeBet({ value: betAmountWei });
     //   await tx.wait();
     //   console.log("Bet placed successfully!");
     // } catch (error) {
@@ -204,7 +204,7 @@ export default function Home() {
                 </p>
                 {
                   fanTokensAmount > 0 ? (
-                    <button onClick={placeBet} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-xl font-bold mt-4" style={{ width: "433px" }}>
+                    <button onClick={placeChallengeBet} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-xl font-bold mt-4" style={{ width: "433px" }}>
                       🔥 CHALLENGE BET
                     </button>
                   ) : (

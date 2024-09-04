@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.45.3",
     "@web3auth/base": "^8.12.4",
     "@web3auth/default-evm-adapter": "^8.12.4",
     "@web3auth/ethereum-provider": "^8.12.4",

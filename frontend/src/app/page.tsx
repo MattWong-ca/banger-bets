@@ -4,8 +4,11 @@ import { useEffect, useState } from "react";
 import fanToken from "../utils/fanToken.json";
 // import betContract from "../utils/betContract.json"; 
 import Image from 'next/image';
+import { createClient } from '@supabase/supabase-js';
 
 declare var window: any
+
+const supabase = createClient('https://uzhrukpbosrdtqvzjbyu.supabase.co', process.env.NEXT_PUBLIC_SUPABASE_KEY!);
 
 export default function Home() {
   const [userAddress, setUserAddress] = useState('');
@@ -88,6 +91,25 @@ export default function Home() {
     }
   }, [userAddress]);
 
+  async function createBet(castHash: string, bettorAddress: string, bettorUsername: string, initialLikes: number) {
+    const { data, error } = await supabase
+      .from('bets')
+      .insert([
+        { 
+          cast_hash: castHash, 
+          bettor_address: bettorAddress, 
+          bettor_username: bettorUsername, 
+          likes_prediction: initialLikes 
+        }
+      ]);
+  
+    if (error) {
+      console.error('Error inserting bet:', error);
+    } else {
+      console.log('Bet inserted:', data);
+    }
+  }
+
   const placeBet = async () => {
     // User signs the transaction to give ___ ETH to contract for betting
     // if (!window.ethereum) {
@@ -127,7 +149,7 @@ export default function Home() {
 
 
     // TO DO: Bet data is published to MongoDB
-
+    createBet(urlParams[0], userAddress, urlParams[2], Number(likesPrediction))
 
     // setTimeout of 2 mins, then use Neynar to delete the cast
     // setTimeout(async () => {
