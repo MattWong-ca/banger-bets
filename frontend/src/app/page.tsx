@@ -147,7 +147,6 @@ export default function Home() {
     //   }
     // );
 
-
     // TO DO: Bet data is published to MongoDB
     createBet(urlParams[0], userAddress, urlParams[2], Number(likesPrediction))
 
