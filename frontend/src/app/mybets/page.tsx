@@ -112,21 +112,40 @@ export default function Home() {
                 </h1>
             </div>
             {userBetsWithAdditionalInfo.map((bet: any, index: number) => (
-                <div key={index} className="bg-white rounded p-4 my-8">
-                    <div>
-                        <span className="font-bold">Cast:</span> <a href={`https://warpcast.com/${bet.cast.author.username}/${bet.cast_hash}`} target="_blank" className="text-blue-500">{bet.cast_hash}</a>
+                <div key={index} className="w-4/5 bg-white rounded p-4 my-8 flex justify-center mx-auto">
+                    <div className="w-1/5 text-center">
+                        <div>
+                            <span className="font-bold">Cast:</span>
+                            <div className="text-4xl">
+                                <a href={`https://warpcast.com/${bet.cast.author.username}/${bet.cast_hash}`} target="_blank" className="text-blue-500">
+                                    {`${bet.cast_hash.slice(0, 4)}...${bet.cast_hash.slice(-2)}`}
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <span className="font-bold">Predicted Likes:</span> {bet.likes_prediction}
+                    <div className="w-1/5 text-center">
+                        <div>
+                            <span className="font-bold">Cast Author:</span>
+                            <div className="text-4xl">{`${bet.cast.author.username.length > 8 ? bet.cast.author.username.slice(0, 8) + '...' : bet.cast.author.username}`}</div>
+                        </div>
                     </div>
-                    <div>
-                        <span className="font-bold">Bet Amount:</span> {bet.bet_amount}
+                    <div className="w-1/5 text-center">
+                        <div>
+                            <span className="font-bold">Predicted Likes:</span>
+                            <div className="text-4xl">{bet.likes_prediction}</div>
+                        </div>
                     </div>
-                    <div>
-                        <span className="font-bold">Cast author:</span> {bet.cast.author.username}
+                    <div className="w-1/5 text-center">
+                        <div>
+                            <span className="font-bold">Bet Amount:</span>
+                            <div className="text-4xl">{bet.bet_amount}</div>
+                        </div>
                     </div>
-                    <div>
-                        <span className="font-bold">Against:</span> {bet.challenger_username}
+                    <div className="w-1/5 text-center">
+                        <div>
+                            <span className="font-bold">Against:</span>
+                            <div className="text-4xl">{bet.challenger_username}</div>
+                        </div>
                     </div>
                 </div>
             ))}
