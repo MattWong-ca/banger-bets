@@ -4,8 +4,11 @@ import { useEffect, useState } from "react";
 import fanToken from "../../utils/fanToken.json";
 // import betContract from "../../utils/betContract.json"; 
 import Image from 'next/image';
+import { createClient } from '@supabase/supabase-js';
 
 declare var window: any
+
+const supabase = createClient('https://uzhrukpbosrdtqvzjbyu.supabase.co', process.env.NEXT_PUBLIC_SUPABASE_KEY!);
 
 export default function Home() {
   const [urlParams, setUrlParams] = useState<{
@@ -116,7 +119,7 @@ export default function Home() {
     //   alert("Failed to place bet. Please try again.");
     // }
 
-    // TO DO: Add challenger address to MongoDB
+    // TO DO: Add challenger address to Supabase
 
     // TO DO: Delete cast if challenger puts down a bet
   }
@@ -139,7 +142,8 @@ export default function Home() {
     <main className="bg-black min-h-screen flex flex-col">
       <nav className="flex justify-between items-center p-4 text-white">
         <div className="space-x-4">
-          <a href="#" className="hover:underline text-lg font-bold">My Bets</a>
+          <a href="/" className="hover:underline text-lg font-bold">Home</a>
+          <a href="/mybets" className="hover:underline text-lg font-bold">My Bets</a>
           <a href="#" className="hover:underline text-lg font-bold">Leaderboard</a>
         </div>
         {userAddress ? (

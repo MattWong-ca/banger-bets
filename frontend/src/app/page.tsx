@@ -15,7 +15,7 @@ export default function Home() {
   const [fanTokensAmount, setFanTokensAmount] = useState(0);
   const [betAmount, setBetAmount] = useState('');
   const [likesPrediction, setLikesPrediction] = useState('');
-  // const [data, setData] = useState(null);
+  const [oneDayLikes, setOneDayLikes] = useState(0);
   const [urlParams, setUrlParams] = useState<string[]>([]);
   const [image, setImage] = useState('');
   const [displayName, setDisplayName] = useState('');
@@ -111,6 +111,19 @@ export default function Home() {
     }
   }
 
+  async function update24hrLikes(castHash: string, likes: number) {
+    const { data, error } = await supabase
+      .from('bets')
+      .update({ "one_day_likes": likes })
+      .eq('cast_hash', castHash);
+  
+    if (error) {
+      console.error('Error updating 24hr likes:', error);
+    } else {
+      console.log('24hr likes updated:', data);
+    }
+  }
+
   const placeBet = async () => {
     // User signs the transaction to give ___ ETH to contract for betting
     // if (!window.ethereum) {
@@ -148,7 +161,7 @@ export default function Home() {
     //   }
     // );
 
-    // TO DO: Bet data is published to MongoDB
+    // Bet data is published to Supabase
     createBet(urlParams[0], userAddress, urlParams[2], Number(likesPrediction), Number(betAmount))
 
     // setTimeout of 2 mins, then use Neynar to delete the cast
@@ -161,7 +174,8 @@ export default function Home() {
     // }, 2 * 60 * 1000);
 
 
-    // do another setTimeout of 24 hrs, then use Neynar to check # of likes, and publish to MongoDB
+    // After 24 hrs, use Neynar to check # of likes, and publish to Supabase
+    // TO DO: use a cron job in the future
     // const options = {
     //   method: 'GET',
     //   headers: {
@@ -178,9 +192,11 @@ export default function Home() {
     //     })
     //     .catch(err => console.error('error:' + err));
 
-    // TO DO: the MongoDB data is updated with response from Neynar API
+    // one_day_likes in Supabase is updated with response from Neynar API
+    // This might need to be in own useEffect with oneDayLikes in dependency array
+    // update24hrLikes(urlParams[0], oneDayLikes)
 
-    // }, 24 * 60 * 60 * 1000);
+    // }, 120000);
   }
 
   const connectWallet = async () => {
@@ -209,7 +225,8 @@ export default function Home() {
     <main className="bg-black min-h-screen flex flex-col">
       <nav className="flex justify-between items-center p-4 text-white">
         <div className="space-x-4">
-          <a href="#" className="hover:underline text-lg font-bold">My Bets</a>
+          <a href="/" className="hover:underline text-lg font-bold">Home</a>
+          <a href="/mybets" className="hover:underline text-lg font-bold">My Bets</a>
           <a href="#" className="hover:underline text-lg font-bold">Leaderboard</a>
         </div>
         {userAddress ? (
