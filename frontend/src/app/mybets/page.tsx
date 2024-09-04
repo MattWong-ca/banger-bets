@@ -12,11 +12,8 @@ const supabase = createClient('https://uzhrukpbosrdtqvzjbyu.supabase.co', proces
 
 export default function Home() {
     const [userAddress, setUserAddress] = useState('');
-    const [image, setImage] = useState('');
-    const [displayName, setDisplayName] = useState('');
-    const [authorUsername, setAuthorUsername] = useState('');
-    const [postText, setPostText] = useState('');
     const [userBets, setUserBets] = useState<any>([]);
+    const [userBetsWithAdditionalInfo, setBetsWithAdditionalInfo] = useState<any>([]);
 
     useEffect(() => {
         connectWallet();
@@ -26,30 +23,23 @@ export default function Home() {
     }, [userAddress]);
 
     useEffect(() => {
-        const fetchCastInfo = async () => {
-            // 0x00221a629cf888fb2ff5997fd4d25cd49272fc42
-            const url = `https://api.neynar.com/v2/farcaster/cast?identifier=HASH&type=hash`;
-            console.log("url: ", url);
-            const res = await fetchCast(url);
-            if (res && res.cast.author.pfp_url) {
-                setImage(res.cast.author.pfp_url);
-                console.log("image: ", image);
-            }
-            if (res && res.cast.author.display_name) {
-                setDisplayName(res.cast.author.display_name);
-                console.log("displayName: ", displayName);
-            }
-            if (res && res.cast.author.username) {
-                setAuthorUsername(res.cast.author.username);
-                console.log("authorUsername: ", authorUsername);
-            }
-            if (res && res.cast.text) {
-                setPostText(res.cast.text);
-                console.log("postText: ", postText);
-            }
+        const fetchAdditionalInfo = async () => {
+            const updatedBets = await Promise.all(
+                userBets.map(async (bet: any) => {
+                    if (bet.cast_hash) {
+                        const url = `https://api.neynar.com/v2/farcaster/cast?identifier=${bet.cast_hash}&type=hash`;
+                        const res = await fetchCast(url);
+                        return { ...bet, ...res };
+                    }
+                    return bet;
+                })
+            );
+            setBetsWithAdditionalInfo(updatedBets);
         };
-        fetchCastInfo();
-    }, [image, displayName, authorUsername, postText]);
+        if (userBets.length > 0) {
+            fetchAdditionalInfo();
+        }
+    }, [userBets]);
 
     async function fetchCast(url: string) {
         const options = { method: 'GET', headers: { accept: 'application/json', api_key: 'NEYNAR_API_DOCS' } };
@@ -88,14 +78,15 @@ export default function Home() {
         if (error) {
             console.error('Error fetching bets:', error);
         } else {
-            // console.log('Bets retrieved:', data);
+            console.log('Bets retrieved:', data);
             setUserBets(data);
-            // return data;
         }
     }
-    const g = () => {
-        console.log(userBets[0])
-    }
+
+    // const g = () => {
+    //     console.log(userBets[0])
+    //     console.log("More info: ", userBetsWithAdditionalInfo)
+    // }
 
     return (
         <main className="bg-black min-h-screen flex flex-col">
@@ -120,16 +111,19 @@ export default function Home() {
                     My Bets
                 </h1>
             </div>
-            {userBets.map((bet: any, index: number) => (
+            {userBetsWithAdditionalInfo.map((bet: any, index: number) => (
                 <div key={index} className="bg-white rounded p-4 my-8">
                     <div>
-                        <span className="font-bold">Cast:</span> <a href={`#`} className="text-blue-500">{bet.cast_hash}</a>
+                        <span className="font-bold">Cast:</span> <a href={`https://warpcast.com/${bet.cast.author.username}/${bet.cast_hash}`} target="_blank" className="text-blue-500">{bet.cast_hash}</a>
                     </div>
                     <div>
                         <span className="font-bold">Predicted Likes:</span> {bet.likes_prediction}
                     </div>
                     <div>
                         <span className="font-bold">Bet Amount:</span> {bet.bet_amount}
+                    </div>
+                    <div>
+                        <span className="font-bold">Cast author:</span> {bet.cast.author.username}
                     </div>
                     <div>
                         <span className="font-bold">Against:</span> {bet.challenger_username}
