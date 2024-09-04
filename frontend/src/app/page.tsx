@@ -99,14 +99,15 @@ export default function Home() {
           cast_hash: castHash, 
           bettor_address: bettorAddress, 
           bettor_username: bettorUsername, 
-          likes_prediction: initialLikes 
+          likes_prediction: initialLikes,
+          bet_amount: betAmount
         }
       ]);
   
     if (error) {
       console.error('Error inserting bet:', error);
     } else {
-      console.log('Bet inserted:', data);
+      console.log('Bet inserted!');
     }
   }
 
