@@ -91,20 +91,44 @@ export default function Home() {
 
     async function getLikesByCastHash(castHash: string) {
         const { data, error } = await supabase
-          .from('bets')
-          .select('likes_prediction, one_day_likes')
-          .eq('cast_hash', castHash);
-      
+            .from('bets')
+            .select('likes_prediction, one_day_likes')
+            .eq('cast_hash', castHash);
+
         if (error) {
-          console.error('Error fetching likes:', error);
-          return null;
+            console.error('Error fetching likes:', error);
+            return null;
         } else {
-          console.log('Likes retrieved:', data[0]);
-          if (data[0].one_day_likes > data[0].likes_prediction) {
-            setWon(true);
-          }
+            console.log('Likes retrieved:', data[0]);
+            if (data[0].one_day_likes > data[0].likes_prediction) {
+                setWon(true);
+            }
         }
-      }
+    }
+
+    // async function claimWinnings(ogBettorAddress: string) {
+    //     try {
+    //         if (window.ethereum) {
+    //             await window.ethereum.request({ method: "eth_requestAccounts" });
+    //             const provider = new ethers.BrowserProvider(window.ethereum);
+    //             const signer = await provider.getSigner();
+
+    //             const contract = new ethers.Contract(contractAddress, betContract.abi, signer);
+
+    //             const tx = await contract.withdraw(ogBettorAddress);
+
+    //             console.log("Transaction sent:", tx);
+
+    //             const receipt = await tx.wait();
+    //             console.log("Transaction mined:", receipt);
+
+    //         } else {
+    //             console.error("Ethereum provider not found. Install MetaMask!");
+    //         }
+    //     } catch (error) {
+    //         console.error("Error withdrawing bet:", error);
+    //     }
+    // }
 
     return (
         <main className="bg-black min-h-screen flex flex-col">
@@ -173,7 +197,7 @@ export default function Home() {
                             won ? (
                                 <div className="flex">
                                     <div className="text-2xl">🎉 You Won!</div>
-                                    <button className="ml-2 text-xl bg-black rounded text-white w-24">Claim</button>
+                                    <button /* onClick={claimWinnings(userAddress)} */ className="ml-2 text-xl bg-black rounded text-white w-24">Claim</button>
                                 </div>
                             ) : (<button onClick={() => getLikesByCastHash(bet.cast_hash)} className="bg-black rounded text-white w-24">Check 👀</button>)
                         }
