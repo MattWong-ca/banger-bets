@@ -120,7 +120,7 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
   const likes = c.req.param('likes');
   const betAmount = c.req.param('betAmount');
   const ogBettorAddress = c.req.param('ogBettorAddress');
-  // const challengeBettor = c.var.interactor?.username;
+  const challengeBettorUsername = c.var.interactor?.username;
 
   // 27 - 43: Fetch the cast info from Neynar API
   async function fetchCast(url: string) {
@@ -183,7 +183,7 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
     intents: [
       <Button.Link href={`https://warpcast.com/${authorUsername}/${castHash}`}>View Cast</Button.Link>,
       // This should link them to web UI
-      <Button.Link href={`https://banger-bets.vercel.app/challenge/?castHash=${castHash}&likes=${likes}&betAmount=${betAmount}&ogBettorAddress=${ogBettorAddress}`}>Challenge Bet</Button.Link>,
+      <Button.Link href={`https://banger-bets.vercel.app/challenge/?castHash=${castHash}&likes=${likes}&betAmount=${betAmount}&ogBettorAddress=${ogBettorAddress}&challengerUsername=${challengeBettorUsername}`}>Challenge Bet</Button.Link>,
     ],
   })
 })
