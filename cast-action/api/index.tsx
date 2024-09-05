@@ -123,6 +123,8 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
   const likes = c.req.param('likes');
   const betAmount = c.req.param('betAmount');
   const ogBettorAddress = c.req.param('ogBettorAddress');
+  const interactor = c.var.interactor?.username;
+
   const {
     trustedData: { messageBytes },
   } = await c.req.json();
@@ -182,10 +184,12 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
             whiteSpace: 'pre-wrap',
           }}
         >
-          <Box marginRight="10">
+          {/* <Box marginRight="10">
             <Image borderRadius="256" width="52" height="52" src={pfp} />
-          </Box>
+          </Box> */}
           <Text weight="400" font="manrope" color="black">{`${castText}`}</Text>
+          <Text weight="400" font="manrope" color="black">{`Challenger: ${challengerUsername}`}</Text>
+          <Text weight="400" font="manrope" color="black">{`Interactor: ${interactor}`}</Text>
         </div>
       </div>
     ),
