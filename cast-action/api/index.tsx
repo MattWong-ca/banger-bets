@@ -125,14 +125,14 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
   const ogBettorAddress = c.req.param('ogBettorAddress');
   const interactor = c.var.interactor?.username;
 
-  const {
-    trustedData: { messageBytes },
-  } = await c.req.json();
-  const result = await neynarClient.validateFrameAction(messageBytes);
-  let challengerUsername: string | undefined;
-  if (result.valid) {
-    challengerUsername = result.action.interactor.username;
-  }
+  // const {
+  //   trustedData: { messageBytes },
+  // } = await c.req.json();
+  // const result = await neynarClient.validateFrameAction(messageBytes);
+  // let challengerUsername: string | undefined;
+  // if (result.valid) {
+  //   challengerUsername = result.action.interactor.username;
+  // }
   // 27 - 43: Fetch the cast info from Neynar API
   async function fetchCast(url: string) {
     const options = { method: 'GET', headers: { accept: 'application/json', api_key: 'NEYNAR_API_DOCS' } };
@@ -188,15 +188,13 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
             <Image borderRadius="256" width="52" height="52" src={pfp} />
           </Box>
           <Text weight="400" font="manrope" color="black">{`${castText}`}</Text>
-          {/* <Text weight="400" font="manrope" color="black">{`Challenger: ${challengerUsername}`}</Text>
-          <Text weight="400" font="manrope" color="black">{`Interactor: ${interactor}`}</Text> */}
         </div>
       </div>
     ),
     intents: [
       <Button.Link href={`https://warpcast.com/${authorUsername}/${castHash}`}>View Cast</Button.Link>,
       // This should link them to web UI
-      <Button.Link href={`https://banger-bets.vercel.app/challenge/?castHash=${castHash}&likes=${likes}&betAmount=${betAmount}&ogBettorAddress=${ogBettorAddress}&challengerUsername=${challengerUsername || ''}`}>Challenge Bet</Button.Link>,
+      <Button.Link href={`https://banger-bets.vercel.app/challenge/?castHash=${castHash}&likes=${likes}&betAmount=${betAmount}&ogBettorAddress=${ogBettorAddress}&challengerUsername=${interactor}`}>Challenge Bet</Button.Link>,
     ],
   })
 })
