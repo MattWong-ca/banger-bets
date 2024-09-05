@@ -119,12 +119,13 @@ app.frame('/view', async (c) => {
 
 // What the BangerBets bot shows 
 app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) => {
+  const interactorUsername = c.var.interactor?.username;
+  console.log(interactorUsername);
   const castHash = c.req.param('castHash');
   const likes = c.req.param('likes');
   const betAmount = c.req.param('betAmount');
   const ogBettorAddress = c.req.param('ogBettorAddress');
-  const interactor = c.var.interactor?.username;
-
+  
   // const {
   //   trustedData: { messageBytes },
   // } = await c.req.json();
@@ -194,7 +195,7 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
     intents: [
       <Button.Link href={`https://warpcast.com/${authorUsername}/${castHash}`}>View Cast</Button.Link>,
       // This should link them to web UI
-      <Button.Link href={`https://banger-bets.vercel.app/challenge/?castHash=${castHash}&likes=${likes}&betAmount=${betAmount}&ogBettorAddress=${ogBettorAddress}&challengerUsername=${interactor}`}>Challenge Bet</Button.Link>,
+      <Button.Link href={`https://banger-bets.vercel.app/challenge/?castHash=${castHash}&likes=${likes}&betAmount=${betAmount}&ogBettorAddress=${ogBettorAddress}&challengerUsername=${interactorUsername}`}>Challenge Bet</Button.Link>,
     ],
   })
 })
