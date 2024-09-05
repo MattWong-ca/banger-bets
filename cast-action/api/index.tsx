@@ -119,21 +119,21 @@ app.frame('/view', async (c) => {
 
 // What the BangerBets bot shows 
 app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) => {
-  const interactorUsername = c.var.interactor?.username;
+  let interactorUsername = '';
   console.log(interactorUsername);
   const castHash = c.req.param('castHash');
   const likes = c.req.param('likes');
   const betAmount = c.req.param('betAmount');
   const ogBettorAddress = c.req.param('ogBettorAddress');
   
-  // const {
-  //   trustedData: { messageBytes },
-  // } = await c.req.json();
-  // const result = await neynarClient.validateFrameAction(messageBytes);
+  const {
+    trustedData: { messageBytes },
+  } = await c.req.json();
+  const result = await neynarClient.validateFrameAction(messageBytes);
   // let challengerUsername: string | undefined;
-  // if (result.valid) {
-  //   challengerUsername = result.action.interactor.username;
-  // }
+  if (result.valid) {
+    interactorUsername = result.action.interactor.username;
+  }
   // 27 - 43: Fetch the cast info from Neynar API
   async function fetchCast(url: string) {
     const options = { method: 'GET', headers: { accept: 'application/json', api_key: 'NEYNAR_API_DOCS' } };
