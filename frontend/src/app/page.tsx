@@ -169,13 +169,13 @@ export default function Home() {
     // createBet(urlParams[0], userAddress, urlParams[2], Number(likesPrediction), Number(betAmount))
 
     // setTimeout of 2 mins, then use Neynar to delete the cast
-    setTimeout(async () => {
-      try {
-        await neynarClient.deleteCast(process.env.SIGNER_UUID!, newBetCast.hash);
-      } catch (error) {
-        console.error('Error with deleteCast:', error);
-      }
-    }, 2 * 60 * 1000);
+    // setTimeout(async () => {
+    //   try {
+    //     await neynarClient.deleteCast(process.env.NEXT_PUBLIC_SIGNER_UUID!, newBetCast.hash);
+    //   } catch (error) {
+    //     console.error('Error with deleteCast:', error);
+    //   }
+    // }, 2 * 60 * 1000);
 
 
     // After 24 hrs, use Neynar to check # of likes, and publish to Supabase
