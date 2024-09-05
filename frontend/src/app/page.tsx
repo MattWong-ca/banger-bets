@@ -250,21 +250,23 @@ export default function Home() {
           </h1>
           <div className="flex w-full h-full">
             <div className="w-1/2 flex items-center justify-center">
-              <div className="w-96 h-96 border-2 border-black p-4 pr-6">
-                <div className="flex items-start">
-                  <Image
-                    src={image || "https://pbs.twimg.com/profile_images/1546487688601096192/QoG0ZVgH_400x400.jpg"}
-                    alt="Profile picture"
-                    width={60}
-                    height={60}
-                    className="rounded-full"
-                  />
-                  <div className="ml-4">
-                    <div className="flex items-center">
-                      <span className="font-bold text-black mr-2">{displayName || "Farcaster"}</span>
-                      <span className="text-gray-500">@{authorUsername || "farcaster"}</span>
+              <div className="w-96 h-96 border-2 border-black p-4 pr-6 overflow-hidden">
+                <div className="flex flex-col h-full">
+                  <div className="flex items-start">
+                    <Image
+                      src={image || "https://pbs.twimg.com/profile_images/1546487688601096192/QoG0ZVgH_400x400.jpg"}
+                      alt="Profile picture"
+                      width={60}
+                      height={60}
+                      className="rounded-full"
+                    />
+                    <div className="ml-4 flex-grow overflow-hidden">
+                      <div className="flex items-center">
+                        <span className="font-bold text-black mr-2 truncate">{displayName || "Farcaster"}</span>
+                        <span className="text-gray-500 truncate">@{authorUsername || "farcaster"}</span>
+                      </div>
+                      <p className="mt-1 text-black whitespace-pre-wrap overflow-y-auto max-h-[calc(100%-2rem)]">{postText || "ok banger"}</p>
                     </div>
-                    <p className="mt-1 text-black whitespace-pre-wrap">{postText || "ok banger"}</p>
                   </div>
                 </div>
               </div>
