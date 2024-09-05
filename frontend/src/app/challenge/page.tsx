@@ -16,16 +16,18 @@ export default function Home() {
     likes: string;
     betAmount: string;
     ogBettorAddress: string;
-  } | null>(null);
+    challengerUsername: string;
+  }>();
   const [userAddress, setUserAddress] = useState('');
   const [fanTokensAmount, setFanTokensAmount] = useState(0);
   const [image, setImage] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [authorUsername, setAuthorUsername] = useState('');
   const [postText, setPostText] = useState('');
+  const [challenged, setChallenged] = useState(false);
 
   useEffect(() => {
-    // connectWallet();
+    connectWallet();
     if (userAddress) {
       getCHZBalance();
     }
@@ -38,6 +40,7 @@ export default function Home() {
       likes: searchParams.get('likes') || '',
       betAmount: searchParams.get('betAmount') || '',
       ogBettorAddress: searchParams.get('ogBettorAddress') || '',
+      challengerUsername: searchParams.get('challengerUsername') || ''
     });
   }, []);
 
@@ -97,6 +100,23 @@ export default function Home() {
     }
   }
 
+  async function addChallenger(castHash: string, challengerAddress: string, challengerUsername: string) {
+    const { data, error } = await supabase
+      .from('bets')
+      .update({ 
+        challenger_address: challengerAddress, 
+        challenger_username: challengerUsername, 
+        matched: true 
+      })
+      .eq('cast_hash', castHash);
+  
+    if (error) {
+      console.error('Error updating challenger info:', error);
+    } else {
+      console.log('Challenger info updated!');
+    }
+  }
+
   const placeChallengeBet = async () => {
     // User signs the transaction to give ___ ETH to contract for betting
     // if (!window.ethereum) {
@@ -119,9 +139,12 @@ export default function Home() {
     //   alert("Failed to place bet. Please try again.");
     // }
 
-    // TO DO: Add challenger address to Supabase
+    // TO DO: Add challenger address to Supabase (IT WORKS!)
+    // addChallenger(urlParams!.castHash, userAddress, urlParams!.challengerUsername)
 
     // TO DO: Delete cast if challenger puts down a bet
+
+    setChallenged(true)
   }
 
   const connectWallet = async () => {
@@ -209,7 +232,7 @@ export default function Home() {
                 {
                   fanTokensAmount > 0 ? (
                     <button onClick={placeChallengeBet} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-xl font-bold mt-4" style={{ width: "433px" }}>
-                      🔥 CHALLENGE BET
+                      {challenged ? '✅ CHALLENGED' : '🔥 CHALLENGE BET'}
                     </button>
                   ) : (
                     <button disabled className="bg-gray-200 text-gray-400 px-4 py-2 rounded text-xl font-bold cursor-not-allowed mt-4" style={{ width: "433px" }}>
