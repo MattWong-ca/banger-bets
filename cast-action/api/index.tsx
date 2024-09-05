@@ -188,8 +188,8 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
             <Image borderRadius="256" width="52" height="52" src={pfp} />
           </Box> */}
           <Text weight="400" font="manrope" color="black">{`${castText}`}</Text>
-          <Text weight="400" font="manrope" color="black">{`Challenger: ${challengerUsername}`}</Text>
-          <Text weight="400" font="manrope" color="black">{`Interactor: ${interactor}`}</Text>
+          {/* <Text weight="400" font="manrope" color="black">{`Challenger: ${challengerUsername}`}</Text>
+          <Text weight="400" font="manrope" color="black">{`Interactor: ${interactor}`}</Text> */}
         </div>
       </div>
     ),
