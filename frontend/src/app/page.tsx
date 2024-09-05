@@ -5,10 +5,12 @@ import fanToken from "../utils/fanToken.json";
 // import betContract from "../utils/betContract.json"; 
 import Image from 'next/image';
 import { createClient } from '@supabase/supabase-js';
+import { NeynarAPIClient } from '@neynar/nodejs-sdk';
 
 declare var window: any
 
 const supabase = createClient('https://uzhrukpbosrdtqvzjbyu.supabase.co', process.env.NEXT_PUBLIC_SUPABASE_KEY!);
+const neynarClient = new NeynarAPIClient('NEYNAR_API_DOCS');
 
 export default function Home() {
   const [userAddress, setUserAddress] = useState('');
@@ -85,7 +87,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    // connectWallet();
+    connectWallet();
     if (userAddress) {
       getCHZBalance();
     }
@@ -147,26 +149,29 @@ export default function Home() {
     console.log(`@${urlParams[2]} is betting ${betAmount} ETH that @${authorUsername}'s cast will get more than ${likesPrediction} likes in 24 hrs.\n\nBet against them:`)
     // Use Neynar --> bot makes a cast with the custom frame
     // bettorUsername, castAuthorUsername from URL params
+    // if (!process.env.NEXT_PUBLIC_SIGNER_UUID) {
+    //   throw new Error("Make sure you set SIGNER_UUID in your .env file");
+    // }
     // let betPost = `@${urlParams[2]} is betting ${betAmount} ETH that @${authorUsername}'s cast will get more than ${likesPrediction} likes in 24 hrs.\n\nBet against them:`;
-    // const betCast = await neynarClient.publishCast(
-    //   process.env.SIGNER_UUID!,
+    // const newBetCast = await neynarClient.publishCast(
+    //   process.env.NEXT_PUBLIC_SIGNER_UUID!,
     //   betPost,
     //   {
     //     embeds: [{
-    // THIS IS THE FRAME URL, NOT THE CHALLENGE PAGE URL
-    // THE OG BETTOR ADDRESS (userAddress) WILL BE PASSED TO THE URL BUTTON THAT THE USER CLICKS SO IT CAN APPEAR AT TOP OF CHALLENGE PAGE BET URL
-    //       url: `https://bangerbets.vercel.app/api/challenge/${urlParams[0]}/${likesPrediction}/${betAmount}/${ogbettorAddress}`
+    // // THIS IS THE FRAME URL, NOT THE CHALLENGE PAGE URL
+    // // THE OG BETTOR ADDRESS (userAddress) WILL BE PASSED TO THE URL BUTTON THAT THE USER CLICKS SO IT CAN APPEAR AT TOP OF CHALLENGE PAGE BET URL
+    //       url: `https://bangerbets.vercel.app/api/challenge/${urlParams[0]}/${likesPrediction}/${betAmount}/${userAddress}`
     //     }]
     //   }
     // );
 
     // Bet data is published to Supabase
-    createBet(urlParams[0], userAddress, urlParams[2], Number(likesPrediction), Number(betAmount))
+    // createBet(urlParams[0], userAddress, urlParams[2], Number(likesPrediction), Number(betAmount))
 
     // setTimeout of 2 mins, then use Neynar to delete the cast
     // setTimeout(async () => {
     //   try {
-    //     await neynarClient.deleteCast(betPost.hash);
+    //     await neynarClient.deleteCast(process.env.SIGNER_UUID!, newBetCast.hash);
     //   } catch (error) {
     //     console.error('Error with deleteCast:', error);
     //   }
