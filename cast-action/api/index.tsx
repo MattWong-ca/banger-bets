@@ -119,21 +119,12 @@ app.frame('/view', async (c) => {
 
 // What the BangerBets bot shows 
 app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) => {
-  let interactorUsername = '';
-  console.log(interactorUsername);
   const castHash = c.req.param('castHash');
   const likes = c.req.param('likes');
   const betAmount = c.req.param('betAmount');
   const ogBettorAddress = c.req.param('ogBettorAddress');
-  
-  const {
-    trustedData: { messageBytes },
-  } = await c.req.json();
-  const result = await neynarClient.validateFrameAction(messageBytes);
-  // let challengerUsername: string | undefined;
-  if (result.valid) {
-    interactorUsername = result.action.interactor.username;
-  }
+  const interactorUsername = c.var.interactor?.username;
+
   // 27 - 43: Fetch the cast info from Neynar API
   async function fetchCast(url: string) {
     const options = { method: 'GET', headers: { accept: 'application/json', api_key: 'NEYNAR_API_DOCS' } };
@@ -188,14 +179,14 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
           <Box marginRight="10">
             <Image borderRadius="256" width="52" height="52" src={pfp} />
           </Box>
-          <Text weight="400" font="manrope" color="black">{`${interactorUsername}`}</Text>
+          <Text weight="400" font="manrope" color="black">{`${castText}`}</Text>
         </div>
       </div>
     ),
     intents: [
       <Button.Link href={`https://warpcast.com/${authorUsername}/${castHash}`}>View Cast</Button.Link>,
       // This should link them to web UI
-      <Button.Link href={`https://banger-bets.vercel.app/challenge/?castHash=${castHash}&likes=${likes}&betAmount=${betAmount}&ogBettorAddress=${ogBettorAddress}&challengerUsername=hardcode`}>Challenge Bet</Button.Link>,
+      <Button.Link href={`https://banger-bets.vercel.app/challenge/?castHash=${castHash}&likes=${likes}&betAmount=${betAmount}&ogBettorAddress=${ogBettorAddress}&challengerUsername=${interactorUsername}`}>Challenge Bet</Button.Link>,
     ],
   })
 })
