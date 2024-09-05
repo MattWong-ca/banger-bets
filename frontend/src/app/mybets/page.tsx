@@ -14,6 +14,7 @@ export default function Home() {
     const [userAddress, setUserAddress] = useState('');
     const [userBets, setUserBets] = useState<any>([]);
     const [userBetsWithAdditionalInfo, setBetsWithAdditionalInfo] = useState<any>([]);
+    const [won, setWon] = useState(false);
 
     useEffect(() => {
         connectWallet();
@@ -88,6 +89,23 @@ export default function Home() {
     //     console.log("More info: ", userBetsWithAdditionalInfo)
     // }
 
+    async function getLikesByCastHash(castHash: string) {
+        const { data, error } = await supabase
+          .from('bets')
+          .select('likes_prediction, one_day_likes')
+          .eq('cast_hash', castHash);
+      
+        if (error) {
+          console.error('Error fetching likes:', error);
+          return null;
+        } else {
+          console.log('Likes retrieved:', data[0]);
+          if (data[0].one_day_likes > data[0].likes_prediction) {
+            setWon(true);
+          }
+        }
+      }
+
     return (
         <main className="bg-black min-h-screen flex flex-col">
             <nav className="flex justify-between items-center p-4 text-white">
@@ -112,40 +130,54 @@ export default function Home() {
                 </h1>
             </div>
             {userBetsWithAdditionalInfo.map((bet: any, index: number) => (
-                <div key={index} className="w-4/5 bg-white rounded p-4 my-8 flex justify-center mx-auto">
-                    <div className="w-1/5 text-center">
-                        <div>
-                            <span className="font-bold">Cast:</span>
-                            <div className="text-4xl">
-                                <a href={`https://warpcast.com/${bet.cast.author.username}/${bet.cast_hash}`} target="_blank" className="text-blue-500">
-                                    {`${bet.cast_hash.slice(0, 4)}...${bet.cast_hash.slice(-2)}`}
-                                </a>
+                <div key={index} className="w-4/5 bg-white rounded p-4 my-8 justify-center mx-auto">
+                    <div className="w-full flex">
+                        <div className="w-1/5 text-center">
+                            <div>
+                                <span className="font-bold">Cast:</span>
+                                <div className="text-4xl">
+                                    <a href={`https://warpcast.com/${bet.cast.author.username}/${bet.cast_hash}`} target="_blank" className="text-blue-500">
+                                        {`${bet.cast_hash.slice(0, 4)}...${bet.cast_hash.slice(-2)}`}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="w-1/5 text-center">
+                            <div>
+                                <span className="font-bold">Cast Author:</span>
+                                <div className="text-4xl">{`${bet.cast.author.username.length > 8 ? bet.cast.author.username.slice(0, 8) + '...' : bet.cast.author.username}`}</div>
+                            </div>
+                        </div>
+                        <div className="w-1/5 text-center">
+                            <div>
+                                <span className="font-bold">Predicted Likes:</span>
+                                <div className="text-4xl">{bet.likes_prediction}</div>
+                            </div>
+                        </div>
+                        <div className="w-1/5 text-center">
+                            <div>
+                                <span className="font-bold">Bet Amount:</span>
+                                <div className="text-4xl">{bet.bet_amount}</div>
+                            </div>
+                        </div>
+                        <div className="w-1/5 text-center">
+                            <div>
+                                <span className="font-bold">Against:</span>
+                                <div className="text-4xl">{bet.challenger_username}</div>
                             </div>
                         </div>
                     </div>
-                    <div className="w-1/5 text-center">
-                        <div>
-                            <span className="font-bold">Cast Author:</span>
-                            <div className="text-4xl">{`${bet.cast.author.username.length > 8 ? bet.cast.author.username.slice(0, 8) + '...' : bet.cast.author.username}`}</div>
-                        </div>
-                    </div>
-                    <div className="w-1/5 text-center">
-                        <div>
-                            <span className="font-bold">Predicted Likes:</span>
-                            <div className="text-4xl">{bet.likes_prediction}</div>
-                        </div>
-                    </div>
-                    <div className="w-1/5 text-center">
-                        <div>
-                            <span className="font-bold">Bet Amount:</span>
-                            <div className="text-4xl">{bet.bet_amount}</div>
-                        </div>
-                    </div>
-                    <div className="w-1/5 text-center">
-                        <div>
-                            <span className="font-bold">Against:</span>
-                            <div className="text-4xl">{bet.challenger_username}</div>
-                        </div>
+                    <div className="flex justify-center items-center h-full flex-col">
+                        <div className="flex justify-center mt-4 items-center">Check status: </div>
+                        {
+                            won ? (
+                                <div className="flex">
+                                    <div className="text-2xl">🎉 You Won!</div>
+                                    <button className="ml-2 text-xl bg-black rounded text-white w-24">Claim</button>
+                                </div>
+                            ) : (<button onClick={() => getLikesByCastHash(bet.cast_hash)} className="bg-black rounded text-white w-24">Check 👀</button>)
+                        }
+                        {/* <button onClick={() => getLikesByCastHash(bet.cast_hash)} className="bg-black rounded text-white w-24">Check 👀</button> */}
                     </div>
                 </div>
             ))}
