@@ -188,7 +188,7 @@ app.frame('/challenge/:castHash/:likes/:betAmount/:ogBettorAddress', async (c) =
           <Box marginRight="10">
             <Image borderRadius="256" width="52" height="52" src={pfp} />
           </Box>
-          <Text weight="400" font="manrope" color="black">{`${castText}`}</Text>
+          <Text weight="400" font="manrope" color="black">{`${interactorUsername}`}</Text>
         </div>
       </div>
     ),
