@@ -95,15 +95,14 @@ export default function Home() {
     const { data, error } = await supabase
       .from('bets')
       .insert([
-        { 
-          cast_hash: castHash, 
-          bettor_address: bettorAddress, 
-          bettor_username: bettorUsername, 
+        {
+          cast_hash: castHash,
+          bettor_address: bettorAddress,
+          bettor_username: bettorUsername,
           likes_prediction: initialLikes,
           bet_amount: betAmount
         }
       ]);
-  
     if (error) {
       console.error('Error inserting bet:', error);
     } else {
@@ -116,7 +115,7 @@ export default function Home() {
       .from('bets')
       .update({ "one_day_likes": likes })
       .eq('cast_hash', castHash);
-  
+
     if (error) {
       console.error('Error updating 24hr likes:', error);
     } else {
@@ -296,23 +295,23 @@ export default function Home() {
                 />
               </div>
               <div className="pt-8">
-              <p className={`text-lg font-bold italic ${fanTokensAmount > 0 ? 'text-green-500' : 'text-red-500'}`}>
-                {fanTokensAmount > 0 
-                  ? `✅ ${fanTokensAmount} Fan Tokens in wallet`
-                  : '❌ No Fan Tokens in wallet'
+                <p className={`text-lg font-bold italic ${fanTokensAmount > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                  {fanTokensAmount > 0
+                    ? `✅ ${fanTokensAmount} Fan Tokens in wallet`
+                    : '❌ No Fan Tokens in wallet'
+                  }
+                </p>
+                {
+                  fanTokensAmount > 0 ? (
+                    <button onClick={placeBet} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-xl font-bold mt-4" style={{ width: "433px" }}>
+                      🔥 BET
+                    </button>
+                  ) : (
+                    <button disabled className="bg-gray-200 text-gray-400 px-4 py-2 rounded text-xl font-bold cursor-not-allowed mt-4" style={{ width: "433px" }}>
+                      BET
+                    </button>
+                  )
                 }
-              </p>
-              {
-                fanTokensAmount > 0 ? (
-                  <button onClick={placeBet} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-xl font-bold mt-4" style={{ width: "433px" }}>
-                    🔥 BET
-                  </button>
-                ) : (
-                  <button disabled className="bg-gray-200 text-gray-400 px-4 py-2 rounded text-xl font-bold cursor-not-allowed mt-4" style={{ width: "433px" }}>
-                    BET
-                  </button>
-                )
-              }
               </div>
               {/* <button onClick={getCHZBalance}>Refresh Balance</button> */}
             </div>
@@ -322,3 +321,27 @@ export default function Home() {
     </main>
   );
 }
+
+
+// When I need to transfer Fan Tokens locally:
+// const transfer = async (amount: number) => {
+//   const { ethereum } = window;
+//   const id = "0x15b32";
+//   let chainId = await ethereum.request({ method: 'eth_chainId' });
+//   if (chainId !== id) {
+//     alert("You are not connected to CHZ testnet!");
+//     return;
+//   }
+//   try {
+//     await window.ethereum.request({ method: 'eth_requestAccounts' });
+//     const provider = new ethers.BrowserProvider(window.ethereum);
+//     const signer = await provider.getSigner();
+//     const chzTokenAddress = "0xb861d6d79123ADa308E5F4030F458b402E2D131A";
+//     const chzTokenContract = new ethers.Contract(chzTokenAddress, fanToken.abi, signer);
+//     const success = await chzTokenContract.transfer("0x41eA9F2133Cc54623e7105d39623C484c4240173", ethers.parseUnits("100", 2));
+//     console.log("Transfer result: ", success);
+//   } catch (error) {
+//     console.error("Error transferring: ", error);
+//   }
+// }
+{/* <button onClick={() => transfer(100)}>transfer</button> */ }
