@@ -2,7 +2,7 @@
 import { ethers } from 'ethers';
 import { useEffect, useState } from "react";
 import fanToken from "../../utils/fanToken.json";
-// import betContract from "../../utils/betContract.json"; 
+import betContractJson from "../../utils/betContract.json"; 
 import Image from 'next/image';
 import { createClient } from '@supabase/supabase-js';
 
@@ -15,6 +15,7 @@ export default function Home() {
     const [userBets, setUserBets] = useState<any>([]);
     const [userBetsWithAdditionalInfo, setBetsWithAdditionalInfo] = useState<any>([]);
     const [won, setWon] = useState(false);
+    const [claimed, setClaimed] = useState(true);
 
     useEffect(() => {
         connectWallet();
@@ -106,29 +107,30 @@ export default function Home() {
         }
     }
 
-    // async function claimWinnings(ogBettorAddress: string) {
-    //     try {
-    //         if (window.ethereum) {
-    //             await window.ethereum.request({ method: "eth_requestAccounts" });
-    //             const provider = new ethers.BrowserProvider(window.ethereum);
-    //             const signer = await provider.getSigner();
+    async function claimWinnings(ogBettorAddress: string) {
+        try {
+            if (window.ethereum) {
+                await window.ethereum.request({ method: "eth_requestAccounts" });
+                const provider = new ethers.BrowserProvider(window.ethereum);
+                const signer = await provider.getSigner();
 
-    //             const contract = new ethers.Contract(contractAddress, betContract.abi, signer);
+                const contractAddress = "0xBA3EB1470575ED8B82aa9f8f89Da260d1feC1042";
+                const contract = new ethers.Contract(contractAddress, betContractJson.abi, signer);
 
-    //             const tx = await contract.withdraw(ogBettorAddress);
+                const tx = await contract.withdraw(ogBettorAddress);
 
-    //             console.log("Transaction sent:", tx);
+                console.log("Transaction sent:", tx);
+                setClaimed(true);
+                const receipt = await tx.wait();
+                console.log("Transaction mined:", receipt);
 
-    //             const receipt = await tx.wait();
-    //             console.log("Transaction mined:", receipt);
-
-    //         } else {
-    //             console.error("Ethereum provider not found. Install MetaMask!");
-    //         }
-    //     } catch (error) {
-    //         console.error("Error withdrawing bet:", error);
-    //     }
-    // }
+            } else {
+                console.error("Ethereum provider not found. Install MetaMask!");
+            }
+        } catch (error) {
+            console.error("Error withdrawing bet:", error);
+        }
+    }
 
     return (
         <main className="bg-black min-h-screen flex flex-col">
@@ -197,11 +199,10 @@ export default function Home() {
                             won ? (
                                 <div className="flex">
                                     <div className="text-2xl">🎉 You Won!</div>
-                                    <button /* onClick={claimWinnings(userAddress)} */ className="ml-2 text-xl bg-black rounded text-white w-24">Claim</button>
+                                    {claimed ? <div className="text-2xl ml-2">Winnings claimed!</div> : <button onClick={() => claimWinnings(bet.bettor_address)} className="ml-2 text-xl bg-black rounded text-white w-24">Claim</button>}
                                 </div>
                             ) : (<button onClick={() => getLikesByCastHash(bet.cast_hash)} className="bg-black rounded text-white w-24">Check 👀</button>)
                         }
-                        {/* <button onClick={() => getLikesByCastHash(bet.cast_hash)} className="bg-black rounded text-white w-24">Check 👀</button> */}
                     </div>
                 </div>
             ))}

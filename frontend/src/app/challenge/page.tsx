@@ -2,7 +2,7 @@
 import { ethers } from 'ethers';
 import { useEffect, useState } from "react";
 import fanToken from "../../utils/fanToken.json";
-// import betContract from "../../utils/betContract.json"; 
+import betContractJson from "../../utils/betContract.json";
 import Image from 'next/image';
 import { createClient } from '@supabase/supabase-js';
 
@@ -103,13 +103,13 @@ export default function Home() {
   async function addChallenger(castHash: string, challengerAddress: string, challengerUsername: string) {
     const { data, error } = await supabase
       .from('bets')
-      .update({ 
-        challenger_address: challengerAddress, 
-        challenger_username: challengerUsername, 
-        matched: true 
+      .update({
+        challenger_address: challengerAddress,
+        challenger_username: challengerUsername,
+        matched: true
       })
       .eq('cast_hash', castHash);
-  
+
     if (error) {
       console.error('Error updating challenger info:', error);
     } else {
@@ -119,32 +119,32 @@ export default function Home() {
 
   const placeChallengeBet = async () => {
     // User signs the transaction to give ___ ETH to contract for betting
-    // if (!window.ethereum) {
-    //   alert("Please install MetaMask!");
-    //   return;
-    // }
-    // try {
-    //   await window.ethereum.request({ method: 'eth_requestAccounts' });
-    //   const provider = new ethers.BrowserProvider(window.ethereum);
-    //   const signer = await provider.getSigner();
-    //   const contractAddress = "0x..."; // TO DO: get contract address from deployment
-    //   const betContract = new ethers.Contract(contractAddress, betContractABI, signer);
+    if (!window.ethereum) {
+      alert("Please install MetaMask!");
+      return;
+    }
+    try {
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const contractAddress = "0xBA3EB1470575ED8B82aa9f8f89Da260d1feC1042"; // TO DO: get contract address from deployment
+      const betContract = new ethers.Contract(contractAddress, betContractJson.abi, signer);
 
-    //   const betAmountWei = ethers.parseEther(betAmount);
-    //   const tx = await betContract.challengeBet({ value: betAmountWei });
-    //   await tx.wait();
-    //   console.log("Bet placed successfully!");
-    // } catch (error) {
-    //   console.error("Error placing bet:", error);
-    //   alert("Failed to place bet. Please try again.");
-    // }
+      const betAmountWei = ethers.parseEther(urlParams!.betAmount);
+      const tx = await betContract.challengeBet(urlParams!.ogBettorAddress, { value: betAmountWei });
+      setChallenged(true)
+      await tx.wait();
+      console.log("Bet placed successfully!");
+    } catch (error) {
+      console.error("Error placing bet:", error);
+      alert("Failed to place bet. Please try again.");
+    }
 
     // TO DO: Add challenger address to Supabase (IT WORKS!)
-    // addChallenger(urlParams!.castHash, userAddress, urlParams!.challengerUsername)
+    addChallenger(urlParams!.castHash, userAddress, urlParams!.challengerUsername)
 
     // TO DO: Delete cast if challenger puts down a bet
 
-    setChallenged(true)
   }
 
   const connectWallet = async () => {
@@ -231,9 +231,15 @@ export default function Home() {
                 </p>
                 {
                   fanTokensAmount > 0 ? (
-                    <button onClick={placeChallengeBet} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-xl font-bold mt-4" style={{ width: "433px" }}>
-                      {challenged ? '✅ CHALLENGED' : '🔥 CHALLENGE BET'}
-                    </button>
+                    challenged ? (
+                      <div className="text-black px-4 py-2 rounded text-xl font-bold mt-4 flex justify-center items-center" style={{ width: "433px" }}>
+                        {'✅ CHALLENGED'}
+                      </div>
+                    ) : (
+                      <button onClick={placeChallengeBet} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-xl font-bold mt-4" style={{ width: "433px" }}>
+                        {'🔥 CHALLENGE BET'}
+                      </button>
+                    )
                   ) : (
                     <button disabled className="bg-gray-200 text-gray-400 px-4 py-2 rounded text-xl font-bold cursor-not-allowed mt-4" style={{ width: "433px" }}>
                       CHALLENGE BET

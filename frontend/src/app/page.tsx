@@ -2,7 +2,7 @@
 import { ethers } from 'ethers';
 import { useEffect, useState } from "react";
 import fanToken from "../utils/fanToken.json";
-// import betContract from "../utils/betContract.json"; 
+import betContractJson from "../utils/betContract.json"; 
 import Image from 'next/image';
 import { createClient } from '@supabase/supabase-js';
 import { NeynarAPIClient } from '@neynar/nodejs-sdk';
@@ -128,25 +128,26 @@ export default function Home() {
 
   const placeBet = async () => {
     // User signs the transaction to give ___ ETH to contract for betting
-    // if (!window.ethereum) {
-    //   alert("Please install MetaMask!");
-    //   return;
-    // }
-    // try {
-    //   await window.ethereum.request({ method: 'eth_requestAccounts' });
-    //   const provider = new ethers.BrowserProvider(window.ethereum);
-    //   const signer = await provider.getSigner();
-    //   const contractAddress = "0x..."; // TO DO: get contract address from deployment
-    //   const betContract = new ethers.Contract(contractAddress, betContractABI, signer);
+    if (!window.ethereum) {
+      alert("Please install MetaMask!");
+      return;
+    }
+    try {
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const contractAddress = "0xBA3EB1470575ED8B82aa9f8f89Da260d1feC1042"; // TO DO: get contract address from deployment
+      const betContract = new ethers.Contract(contractAddress, betContractJson.abi, signer);
 
-    //   const betAmountWei = ethers.parseEther(betAmount);
-    //   const tx = await betContract.bet({ value: betAmountWei });
-    //   await tx.wait();
-    //   console.log("Bet placed successfully!");
-    // } catch (error) {
-    //   console.error("Error placing bet:", error);
-    //   alert("Failed to place bet. Please try again.");
-    // }
+      const betAmountWei = ethers.parseEther(betAmount);
+      const tx = await betContract.bet({ value: betAmountWei });
+      setBetPlaced(true);
+      await tx.wait();
+      console.log("Bet placed successfully!");
+    } catch (error) {
+      console.error("Error placing bet:", error);
+      alert("Failed to place bet. Please try again.");
+    }
     console.log(`@${urlParams[2]} is betting ${betAmount} ETH that @${authorUsername}'s cast will get more than ${likesPrediction} likes in 24 hrs.\n\nBet against them:`)
     // Use Neynar --> bot makes a cast with the custom frame
     // bettorUsername, castAuthorUsername from URL params
@@ -196,9 +197,6 @@ export default function Home() {
     //     })
     //     .catch(err => console.error('error:' + err));
     // }, 120000);
-
-    // After successful bet placement
-    setBetPlaced(true);
   }
 
   // one_day_likes in Supabase is updated with response from Neynar API
