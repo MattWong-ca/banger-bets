@@ -23,6 +23,7 @@ export default function Home() {
   const [displayName, setDisplayName] = useState('');
   const [authorUsername, setAuthorUsername] = useState('');
   const [postText, setPostText] = useState('');
+  const [betPlaced, setBetPlaced] = useState(false);
 
   async function fetchLikes(url: string) {
     const options = { method: 'GET', headers: { accept: 'application/json', api_key: 'NEYNAR_API_DOCS' } };
@@ -87,7 +88,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    connectWallet();
+    // connectWallet();
     if (userAddress) {
       getCHZBalance();
     }
@@ -158,15 +159,15 @@ export default function Home() {
       betPost,
       {
         embeds: [{
-    // THIS IS THE FRAME URL, NOT THE CHALLENGE PAGE URL
-    // THE OG BETTOR ADDRESS (userAddress) WILL BE PASSED TO THE URL BUTTON THAT THE USER CLICKS SO IT CAN APPEAR AT TOP OF CHALLENGE PAGE BET URL
+          // THIS IS THE FRAME URL, NOT THE CHALLENGE PAGE URL
+          // THE OG BETTOR ADDRESS (userAddress) WILL BE PASSED TO THE URL BUTTON THAT THE USER CLICKS SO IT CAN APPEAR AT TOP OF CHALLENGE PAGE BET URL
           url: `https://bangerbets.vercel.app/api/challenge/${urlParams[0]}/${likesPrediction}/${betAmount}/${userAddress}`
         }]
       }
     );
 
     // Bet data is published to Supabase
-    // createBet(urlParams[0], userAddress, urlParams[2], Number(likesPrediction), Number(betAmount))
+    createBet(urlParams[0], userAddress, urlParams[2], Number(likesPrediction), Number(betAmount))
 
     // setTimeout of 2 mins, then use Neynar to delete the cast
     // setTimeout(async () => {
@@ -178,8 +179,7 @@ export default function Home() {
     // }, 2 * 60 * 1000);
 
 
-    // After 24 hrs, use Neynar to check # of likes, and publish to Supabase
-    // TO DO: use a cron job in the future
+    // After 24 hrs, use Neynar to check # of likes, and publish to Supabase. TO DO: use a cron job in the future
     // const options = {
     //   method: 'GET',
     //   headers: {
@@ -187,21 +187,24 @@ export default function Home() {
     //     api_key: 'NEYNAR_API_DOCS'
     //   }
     // };
-    // const url = 'https://example.com/api/endpoint';
+    // const url = `https://api.neynar.com/v2/farcaster/cast?identifier=${urlParams[0]}&type=hash`;
     // setTimeout(() => {
     //   fetch(url, options)
     //     .then(res => res.json())
     //     .then(json => {
-    //       setData(json);
+    //       setOneDayLikes(json.cast.reactions.likes_count);
     //     })
     //     .catch(err => console.error('error:' + err));
-
-    // one_day_likes in Supabase is updated with response from Neynar API
-    // This might need to be in own useEffect with oneDayLikes in dependency array
-    // update24hrLikes(urlParams[0], oneDayLikes)
-
     // }, 120000);
+
+    // After successful bet placement
+    setBetPlaced(true);
   }
+
+  // one_day_likes in Supabase is updated with response from Neynar API
+  // useEffect(() => {
+  //   update24hrLikes(urlParams[0], oneDayLikes)
+  // }, [oneDayLikes]);
 
   const connectWallet = async () => {
     if (typeof window.ethereum !== 'undefined') {
@@ -308,7 +311,11 @@ export default function Home() {
                     : '❌ No Fan Tokens in wallet'
                   }
                 </p>
-                {
+                {betPlaced ? (
+                  <p className="text-black text-center px-4 py-2 rounded text-xl font-bold mt-4" style={{ width: "433px" }}>
+                    Bet placed!
+                  </p>
+                ) : (
                   fanTokensAmount > 0 ? (
                     <button onClick={placeBet} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-xl font-bold mt-4" style={{ width: "433px" }}>
                       🔥 BET
@@ -318,7 +325,7 @@ export default function Home() {
                       BET
                     </button>
                   )
-                }
+                )}
               </div>
               {/* <button onClick={getCHZBalance}>Refresh Balance</button> */}
             </div>
