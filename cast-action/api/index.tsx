@@ -5,11 +5,8 @@ import { neynar as neynarHub } from "frog/hubs";
 import { neynar } from "frog/middlewares";
 import { handle } from "frog/vercel";
 import { createSystem } from 'frog/ui';
-import { NeynarAPIClient } from '@neynar/nodejs-sdk';
 
 // const ADD_ACTION_URL = "https://warpcast.com/~/add-cast-action?url=https://bangerbets.vercel.app/api/bet";
-
-const neynarClient = new NeynarAPIClient(process.env.NEXT_PUBLIC_NEYNAR_API_KEY!);
 
 const { Box, Text, Image, vars } = createSystem({
   fonts: {

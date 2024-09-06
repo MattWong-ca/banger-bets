@@ -14,5 +14,10 @@ module.exports = {
       accounts: [process.env.PRIVATE_KEY],
       gasPrice: 1000000000,
     },
+    sepolia: {
+      url: 'https://rpc.ankr.com/eth_sepolia',
+      accounts: [process.env.PRIVATE_KEY],
+      gasPrice: 1000000000,
+    },
   }
 };
