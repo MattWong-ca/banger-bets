@@ -136,7 +136,7 @@ export default function Home() {
       await window.ethereum.request({ method: 'eth_requestAccounts' });
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
-      const contractAddress = "0xBA3EB1470575ED8B82aa9f8f89Da260d1feC1042"; // TO DO: get contract address from deployment
+      const contractAddress = "0xfF70C3ae45022AE728b62c90d0c14D526560e9Cf"; // TO DO: get contract address from deployment
       const betContract = new ethers.Contract(contractAddress, betContractJson.abi, signer);
 
       const betAmountWei = ethers.parseEther(betAmount);

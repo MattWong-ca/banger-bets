@@ -114,7 +114,7 @@ export default function Home() {
                 const provider = new ethers.BrowserProvider(window.ethereum);
                 const signer = await provider.getSigner();
 
-                const contractAddress = "0xBA3EB1470575ED8B82aa9f8f89Da260d1feC1042";
+                const contractAddress = "0xfF70C3ae45022AE728b62c90d0c14D526560e9Cf";
                 const contract = new ethers.Contract(contractAddress, betContractJson.abi, signer);
 
                 const tx = await contract.withdraw(ogBettorAddress);
