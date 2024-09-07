@@ -15,7 +15,7 @@ export default function Home() {
     const [userBets, setUserBets] = useState<any>([]);
     const [userBetsWithAdditionalInfo, setBetsWithAdditionalInfo] = useState<any>([]);
     const [won, setWon] = useState(false);
-    const [claimed, setClaimed] = useState(true);
+    const [claimed, setClaimed] = useState(false);
 
     useEffect(() => {
         connectWallet();
