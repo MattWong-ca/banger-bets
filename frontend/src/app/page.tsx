@@ -88,7 +88,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    // connectWallet();
+    connectWallet();
     if (userAddress) {
       getCHZBalance();
     }
@@ -171,38 +171,38 @@ export default function Home() {
     createBet(urlParams[0], userAddress, urlParams[2], Number(likesPrediction), Number(betAmount))
 
     // setTimeout of 2 mins, then use Neynar to delete the cast
-    // setTimeout(async () => {
-    //   try {
-    //     await neynarClient.deleteCast(process.env.NEXT_PUBLIC_SIGNER_UUID!, newBetCast.hash);
-    //   } catch (error) {
-    //     console.error('Error with deleteCast:', error);
-    //   }
-    // }, 2 * 60 * 1000);
+    setTimeout(async () => {
+      try {
+        await neynarClient.deleteCast(process.env.NEXT_PUBLIC_SIGNER_UUID!, newBetCast.hash);
+      } catch (error) {
+        console.error('Error with deleteCast:', error);
+      }
+    }, 2 * 60 * 1000);
 
 
     // After 24 hrs, use Neynar to check # of likes, and publish to Supabase. TO DO: use a cron job in the future
-    // const options = {
-    //   method: 'GET',
-    //   headers: {
-    //     accept: 'application/json',
-    //     api_key: 'NEYNAR_API_DOCS'
-    //   }
-    // };
-    // const url = `https://api.neynar.com/v2/farcaster/cast?identifier=${urlParams[0]}&type=hash`;
-    // setTimeout(() => {
-    //   fetch(url, options)
-    //     .then(res => res.json())
-    //     .then(json => {
-    //       setOneDayLikes(json.cast.reactions.likes_count);
-    //     })
-    //     .catch(err => console.error('error:' + err));
-    // }, 120000);
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        api_key: 'NEYNAR_API_DOCS'
+      }
+    };
+    const url = `https://api.neynar.com/v2/farcaster/cast?identifier=${urlParams[0]}&type=hash`;
+    setTimeout(() => {
+      fetch(url, options)
+        .then(res => res.json())
+        .then(json => {
+          setOneDayLikes(json.cast.reactions.likes_count);
+        })
+        .catch(err => console.error('error:' + err));
+    }, 120000);
   }
 
   // one_day_likes in Supabase is updated with response from Neynar API
-  // useEffect(() => {
-  //   update24hrLikes(urlParams[0], oneDayLikes)
-  // }, [oneDayLikes]);
+  useEffect(() => {
+    update24hrLikes(urlParams[0], oneDayLikes)
+  }, [oneDayLikes]);
 
   const connectWallet = async () => {
     if (typeof window.ethereum !== 'undefined') {
