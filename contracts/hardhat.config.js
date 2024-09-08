@@ -19,5 +19,9 @@ module.exports = {
       accounts: [process.env.PRIVATE_KEY],
       gasPrice: 1000000000,
     },
+    'linea-sepolia': {
+      url: "https://rpc.sepolia.linea.build",
+      accounts: [process.env.PRIVATE_KEY]
+    }
   }
 };
